@@ -7,6 +7,7 @@ module.exports = {
   getNameCategorias,
   helpUserId,
   getByProduto,
+  getProdutosFromCategoria
 }
 
 
@@ -36,6 +37,16 @@ async function getByProduto(produto) {
 
   return await User.find({
       'help.necessidades.produto': produto
+    })
+    .sort({
+      createAt: 1
+    }).select('_id help');
+}
+
+async function getProdutosFromCategoria(categoria) {
+
+  return await User.find({
+      'help.necessidades.categoria': categoria
     })
     .sort({
       createAt: 1

@@ -48,6 +48,17 @@ export class MapasComponent implements OnInit {
   userContent: any = {};
   necessidades: any = [{ produto: "" }];
   produtoSelecionado = 1;
+
+
+  public preCategorias = [
+    { id: 1, name: 'Alimentos', icon: 'abcedario.png' },
+    { id: 2, name: 'Higiene', icon: 'entrevista.png' },
+    { id: 3, name: 'Medicamentos', icon: 'poscast.png' }
+  ];
+  preCategoriaSelecionada;
+
+  categoriaSelecionada: any;
+
   user: any;
   lat: any;
   lng: any;
@@ -85,7 +96,7 @@ export class MapasComponent implements OnInit {
 
   ngOnInit() {
 
-    this.carregarPontos()
+    //this.carregarPontos()
 
   }
 
@@ -122,7 +133,7 @@ export class MapasComponent implements OnInit {
 
   }
 
-  canHelp() {
+  insertCallHelp() {
 
     this.carregando = true;
 
@@ -181,6 +192,24 @@ export class MapasComponent implements OnInit {
     this.http.get("api/points/getByProduto/" + this.produtoSelecionado).subscribe((res: any) => {
       this.carregando = false;
       this.points = res;
+    }, err => {
+      this.carregando = false;
+      this.toastr.error('Servidor momentaneamente inoperante. Tente novamente mais tarde', 'Erro: ');
+    });
+  }
+
+  mudarPreCategoria(id) {
+    this.carregando = true;
+    this.preCategoriaSelecionada = id;
+    this.http.get("api/points/getProdutosFromCategoria/" + id).subscribe((res: any) => {
+      this.carregando = false;
+      this.points = res;
+
+      res.forEach(help => {
+        help.help.necessidades.forEach(necessidade => {
+          this.categorias.push(necessidade);
+        });
+      });
     }, err => {
       this.carregando = false;
       this.toastr.error('Servidor momentaneamente inoperante. Tente novamente mais tarde', 'Erro: ');

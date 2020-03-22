@@ -15,6 +15,7 @@ router.get('/', asyncHandler(getPoints));
 router.get('/categoriasName', asyncHandler(getNameCategorias));
 router.get('/helpUserId/:userId', asyncHandler(helpUserId));
 router.get('/getByProduto/:produto', asyncHandler(getByProduto));
+router.get('/getProdutosFromCategoria/:idCategoria', asyncHandler(getProdutosFromCategoria));
 
 
 
@@ -34,6 +35,12 @@ async function getByProduto(req, res) {
   let user = await pointsCtrl.getByProduto(req.params.produto);
   res.json(user);
 }
+
+async function getProdutosFromCategoria(req, res) {
+  let user = await pointsCtrl.getProdutosFromCategoria(req.params.idCategoria);
+  res.json(user);
+}
+
 
 async function helpUserId(req, res) {
   let user = await pointsCtrl.helpUserId(req.params.userId);

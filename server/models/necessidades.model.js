@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const NecessidadesSchema = new mongoose.Schema({
-  necessidades: {
-    categoria: Number,
-    produto: String,
-    icon: String
-  }
-
+  categoria: Number,
+  produto: {
+    type: String,
+    lowercase: true
+  },
+  icon: String
 }, {
   versionKey: false
 });
