@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const User = require('../models/user.model');
-const Gallery = require('../models/gallery.model');
 const config = require('../config/config');
 
 
