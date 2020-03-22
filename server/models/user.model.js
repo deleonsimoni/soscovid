@@ -5,11 +5,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  document: {
-    type: String,
-    required: true,
-    unique: true
-  },
+  Membros: [{
+    nome: String,
+    parentesco: String,
+    idade: Number
+  }],
+
   email: {
     type: String,
     required: true,
@@ -51,16 +52,36 @@ const UserSchema = new mongoose.Schema({
     country: String,
     state: String
   },
+  lat: {
+    type: String,
+    required: true
+  },
+  lng: {
+    type: String,
+    required: true
+  },
   phones: {
     cellphone: String,
     telephone: String
   },
-  roles: [{
-    id: Number
-  }]
-}, {
-  versionKey: false
-});
+  social: {
+    facebook: String,
+    instagran: String
+  },
+  trabalho: {
+    type: String
+  },
+  necessidades: [{
+    produto: String,
+    qtd: Number
+  }],
+  obs: {
+    type: String
+  }
+},
+  {
+    versionKey: false
+  });
 
 
 module.exports = mongoose.model('User', UserSchema);
