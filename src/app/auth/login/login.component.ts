@@ -3,18 +3,27 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['../auth.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-  constructor(private authService: AuthService,
+  public registerForm: FormGroup;
+
+  constructor(
+    private authService: AuthService,
     private router: Router,
     private toastr: ToastrService,
-  ) { }
+    private builder: FormBuilder
+  ) {
+
+    this.createForm();
+
+  }
 
   email: string;
   password: string;
@@ -23,7 +32,10 @@ export class LoginComponent implements OnInit {
   register: any = {};
   regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  ngOnInit() {
+  public createForm() {
+    this.registerForm = this.builder.group({
+
+    });
   }
 
   login(): void {
