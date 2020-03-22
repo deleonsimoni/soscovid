@@ -34,12 +34,50 @@ export class LoginComponent {
 
   public createForm() {
     this.registerForm = this.builder.group({
+      fullname: [null],
+      membros: this.builder.group({
+        nome: [null],
+        parentesco: [null],
+        idade: [null]
+      }),
+      email: [null],
+      dateBirth: [null],
+      address: this.builder.group({
+        street: [null],
+        complement: [null],
+        num: [null],
+        zip: [null],
+        city: [null],
+        district: [null],
+        country: [null],
+        state: [null]
+      }),
+      lat: [null],
+      lng: [null],
+      phones: this.builder.group({
+        cellphone: [null],
+        telephone: [null]
+      }),
+      social: this.builder.group({
+        facebook: [null],
+        instagran: [null]
+      }),
+      trabalho: [null],
+      necessidades: this.builder.array([
+        this.createNecessityField()
+      ]),
+      obs: [null]
+    });
+  }
 
+  private createNecessityField() {
+    return this.builder.group({
+      produto: [null],
+      qtd: [null]
     });
   }
 
   login(): void {
-
     if (!this.email || !this.password) {
       alert('Preencha corretamente os campos de acesso.');
     } else {
