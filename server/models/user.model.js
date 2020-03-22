@@ -61,14 +61,13 @@ const UserSchema = new mongoose.Schema({
       type: String
     },
     necessidades: [{
-      produto: String,
-      icon: String
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'necessidades'
     }],
     obs: {
       type: String
     }
   },
-
   cellphone: {
     type: String
   },
