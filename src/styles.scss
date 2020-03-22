@@ -49,11 +49,12 @@ body {
 }
 
 /* Editar o carrocel test */
-.modal-content{
+.modal-content {
   background-color: transparent;
   border: none !important;
   border-radius: 0px !important;
 }
+
 .modal-header {
   border: none !important;
   color: white;
@@ -65,23 +66,50 @@ body {
   padding: 2em;
   width: 100%;
 }
-.modal-body{
+
+.modal-body {
   margin-top: 6em;
 }
+
 @media only screen and (max-width: 600px) {
-  .modal-body{
+  .modal-body {
     padding: 0px;
     margin-top: 7em;
   }
+
   .modal-edit {
     max-width: 100%;
   }
 }
+
 /* fim */
 
 .carousel-control-prev {
   width: 1em;
 }
+
 .carousel-control-next {
   width: 1em;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
 }

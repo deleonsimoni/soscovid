@@ -12,19 +12,20 @@
         <div class="card-header" style="cursor: pointer;" (click)="exibirCategorias()">
           Em que pode ajudar? <i #categoriaSeta class="fa fa-chevron-down pull-right"></i>
         </div>
+        <div id="categoriaSelect" style="max-height: 200px; overflow-y: auto;">
+          <ul [style.display]="isCategoriaAberta ? 'block' : 'none'" *ngFor="let categoria of categorias"
+            class="dontShow list-group list-group-flush">
 
-        <ul [style.display]="isCategoriaAberta ? 'block' : 'none'" *ngFor="let categoria of categorias"
-          class="dontShow list-group list-group-flush">
+            <li id="{{categoria.produto}}" [ngClass]="{'success':produtoSelecionado == categoria.produto}"
+              style="cursor: pointer;" (click)="mudarCategoria(categoria.produto)" class="list-group-item text-left">
+              <img *ngIf="categoria.icon" style="margin-right: 10px;" [src]="getIconCategoria(categoria.produto)"
+                width="30px" height="30px" />{{ categoria.produto }}
+              <span *ngIf="carregando" class="pull-right"><i style='text-align: center;'
+                  class="fa fa-spinner fa-spin"></i></span>
+            </li>
 
-          <li id="{{categoria.produto}}" [ngClass]="{'success':produtoSelecionado == categoria.produto}"
-            style="cursor: pointer;" (click)="mudarCategoria(categoria.produto)" class="list-group-item text-left">
-            <img *ngIf="categoria.icon" style="margin-right: 10px;" [src]="getIconCategoria(categoria.produto)"
-              width="30px" height="30px" />{{ categoria.produto }}
-            <span *ngIf="carregando" class="pull-right"><i style='text-align: center;'
-                class="fa fa-spinner fa-spin"></i></span>
-          </li>
-
-        </ul>
+          </ul>
+        </div>
       </div>
 
       <div class="card" style="width: 18rem;">

@@ -84,7 +84,14 @@ export class MapasComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.carregarPontos()
+
+  }
+
+  carregarPontos() {
     this.carregando = true;
+    this.categorias = [];
     this.http.get(`${this.baseUrl}/points`).subscribe((res: any) => {
       this.carregando = false;
       this.points = res;
@@ -99,7 +106,6 @@ export class MapasComponent implements OnInit {
       this.carregando = false;
       this.toastr.error('Servidor momentaneamente inoperante. Tente novamente mais tarde', 'Erro: ');
     });
-
   }
 
 
@@ -141,6 +147,8 @@ export class MapasComponent implements OnInit {
         this.toastr.success(res.message, 'Sucesso');
         this.necessidades = [{ produto: "" }];
         this.help = {};
+        this.carregarPontos();
+
       }
     }, err => {
 
