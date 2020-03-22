@@ -28,7 +28,7 @@ async function insert(req, res) {
 }
 
 async function callHelp(req, res) {
-  let user = await userCtrl.insert(req.user, req.body.data);
+  let user = await userCtrl.callHelp(req.user, req.body);
   res.json(user);
 }
 

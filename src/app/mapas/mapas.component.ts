@@ -6,6 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { EmbedVideoService } from 'ngx-embed-video';
 import { ToastrService } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Injectable, Inject } from '@angular/core';
 
 declare var google: any;
 
@@ -73,7 +74,9 @@ export class MapasComponent implements OnInit {
     private http: HttpClient,
     private toastr: ToastrService,
     private embedService: EmbedVideoService,
-    private _sanitizer: DomSanitizer
+    private _sanitizer: DomSanitizer,
+    @Inject('BASE_API_URL') private baseUrl: string,
+
   ) {
     if (navigator) {
       navigator.geolocation.getCurrentPosition(pos => {
@@ -85,7 +88,7 @@ export class MapasComponent implements OnInit {
 
   ngOnInit() {
     this.carregando = true;
-    this.http.get("api/points/" + this.categoriaSelecionada).subscribe((res: any) => {
+    this.http.get(`${this.baseUrl}/points/` + this.categoriaSelecionada).subscribe((res: any) => {
       this.carregando = false;
       this.points = res;
     }, err => {
@@ -133,7 +136,9 @@ export class MapasComponent implements OnInit {
       obs: this.help.obs
     }
 
-    this.http.post(`api/user/canHelp`, help).subscribe((res: any) => {
+    let requisicao = help;
+
+    this.http.post(`${this.baseUrl}/user/callHelp`, requisicao).subscribe((res: any) => {
       this.carregando = false;
 
       if (res && res.temErro) {

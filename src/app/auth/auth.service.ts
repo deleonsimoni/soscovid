@@ -24,7 +24,7 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return Observable.create(observer => {
 
-      this.http.post(`${this.baseUrl}/api/auth/login`, {
+      this.http.post(`${this.baseUrl}/auth/login`, {
         email,
         password
       }).subscribe((data: any) => {
@@ -56,7 +56,7 @@ export class AuthService {
 
   register(register): Observable<any> {
     return Observable.create(observer => {
-      this.http.post(`${this.baseUrl}/api/auth/register`, register).subscribe((data: any) => {
+      this.http.post(`${this.baseUrl}/auth/register`, register).subscribe((data: any) => {
         observer.next({ user: data.user });
         this.setUser(data.user, data.token);
         this.token.saveToken(data.token);
@@ -95,7 +95,7 @@ export class AuthService {
   }
 
   refresh() {
-    return this.http.get(`${this.baseUrl}api/auth/refresh`);
+    return this.http.get(`${this.baseUrl}/auth/refresh`);
   }
 
   me(): Observable<any> {

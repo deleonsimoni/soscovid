@@ -87,7 +87,7 @@ export class LoginComponent {
       return;
     }
 
-    this.carregando = true;
+    //this.carregando = true;
 
     this.authService.register(this.register)
       .subscribe(data => {

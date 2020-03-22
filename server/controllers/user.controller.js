@@ -22,8 +22,8 @@ async function insert(user) {
 
 
 async function callHelp(user, data) {
-
-  return await user.findByIdAndUpdate(user._id, data, {
+  console.log(data)
+  return await User.findByIdAndUpdate(user._id, data, {
     new: true
   })
 
