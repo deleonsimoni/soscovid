@@ -20,6 +20,12 @@ module.exports = router;
   session: false
 }))*/
 
+router.get('/', asyncHandler(getPoints));
+router.get('/categoriasName', asyncHandler(getNameCategorias));
+router.get('/helpUserId/:userId', asyncHandler(helpUserId));
+
+
+
 router.get('/:categoriaId', asyncHandler(getPointsByCategoria));
 router.get('/:categoriaId/:pointId', asyncHandler(getContentOfPoint));
 
@@ -97,6 +103,24 @@ async function getPointsByCategoria(req, res) {
   let user = await pointsCtrl.getPointsByCategoria(req);
   res.json(user);
 }
+
+async function getPoints(req, res) {
+  let user = await pointsCtrl.getPoints(req);
+  res.json(user);
+}
+
+async function getNameCategorias(req, res) {
+  let user = await pointsCtrl.getNameCategorias(req);
+  res.json(user);
+}
+
+async function helpUserId(req, res) {
+  let user = await pointsCtrl.helpUserId(req.params.userId);
+  res.json(user);
+}
+
+
+
 
 async function incluirContentByCategoria(req, res) {
   let content;

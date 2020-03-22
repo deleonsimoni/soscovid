@@ -13,17 +13,17 @@ module.exports = {
 async function insert(user) {
   user.hashedPassword = bcrypt.hashSync(user.password, 10);
   delete user.password;
-
-  //todo temover
-  //user.icAdmin = true;
-
   return await new User(user).save();
 }
 
 
 async function callHelp(user, data) {
   console.log(data)
-  return await User.findByIdAndUpdate(user._id, data, {
+  return await User.findByIdAndUpdate(user._id, {
+    $set: {
+      help: data
+    }
+  }, {
     new: true
   })
 

@@ -38,7 +38,7 @@
   <agm-map [latitude]="location.lat" [zoom]="location.zoom" [longitude]="location.lng" [styles]="styles">
 
     <agm-marker *ngFor="let point of points" [iconUrl]="getIconCategoria(categoriaSelecionada)"
-      (markerClick)="selectMarker(point)" [latitude]="point.lat" [longitude]="point.lng">
+      (markerClick)="selectMarker(point._id)" [latitude]="point.help.lat" [longitude]="point.help.lng">
     </agm-marker>
 
   </agm-map>
@@ -76,8 +76,8 @@
 <ng-template #modalTemplate>
   <div class="modal-header">
     <div class="pull-left">
-      <h4 class="modal-title">{{ point.nome }}</h4>
-      <b>Categoria:</b> {{getNameCategoria(categoriaSelecionada)}}
+      <h4 class="modal-title">Somar forças</h4>
+      <!--<b>Categoria:</b> {{getNameCategoria(categoriaSelecionada)}}-->
     </div>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
@@ -85,9 +85,63 @@
   </div>
   <div class="modal-body">
 
-    <app-abecedario *ngIf="categoriaSelecionada == 1" [contents]="contents" [isAdmin]="false"
-      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
-    </app-abecedario>
+
+    <ngb-carousel *ngIf="!isAdmin" [showNavigationArrows]="false" [wrap]="false" [activeId]="'slideTwo'" interval="0">
+      <ng-template ngbSlide>
+        <mat-card class="mt-5 mt-sm-0 card">
+          <!-- Titulo -->
+          <mat-card-header>
+            <mat-card-title>
+              <h1> {{ userContent.fullname }}</h1>
+            </mat-card-title>
+          </mat-card-header>
+
+          <!-- Conteudo -->
+          <mat-card-content>
+            <div class="row">
+              <div class="col-12">
+
+                Facebook: {{userContent.facebook}}
+
+              </div>
+              <div class="col-12">
+
+                Instagram: {{userContent.instagram}}
+
+              </div>
+
+              <div class="col-12">
+
+                celular: {{userContent.cellphone}}
+
+              </div>
+
+              <!-- Informações -->
+              <div class="col-lg-5">
+                Observação: {{ userContent.help.obs }}
+              </div>
+
+              <!-- fim infs -->
+
+              <div class="col-sm-12">
+                <mat-card-header>
+                  <h3 class="mt-3 mt-sm-0">Produtos de necessidade</h3>
+                </mat-card-header>
+
+                <mat-card-header class="d-flex flex-row flex-wrap">
+                  <div *ngFor="let necessidade of userContent.help.necessidades; let i = index;" class="m-2">
+                    {{ necessidade.produto }}
+                  </div>
+                </mat-card-header>
+              </div>
+            </div>
+          </mat-card-content>
+
+
+        </mat-card>
+      </ng-template>
+    </ngb-carousel>
+
 
   </div>
 </ng-template>

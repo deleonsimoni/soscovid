@@ -45,7 +45,7 @@ export class MapasComponent implements OnInit {
   points: any = {};
   point: any = {};
   help: any = {};
-  contents: any = {};
+  userContent: any = {};
   necessidades: any = [{ produto: "" }];
   categoriaSelecionada = 1;
   user: any;
@@ -88,34 +88,23 @@ export class MapasComponent implements OnInit {
 
   ngOnInit() {
     this.carregando = true;
-    this.http.get(`${this.baseUrl}/points/` + this.categoriaSelecionada).subscribe((res: any) => {
+    this.http.get(`${this.baseUrl}/points`).subscribe((res: any) => {
       this.carregando = false;
       this.points = res;
+      //this.categorias = res;
+
     }, err => {
       this.carregando = false;
       this.toastr.error('Servidor momentaneamente inoperante. Tente novamente mais tarde', 'Erro: ');
     });
+
   }
 
 
-  selectMarker(position: any) {
-    this.point = position;
+  selectMarker(helpUserId) {
 
-    this.http.get("api/points/" + this.categoriaSelecionada + "/" + position._id).subscribe((res: any) => {
-      this.contents = res;
-
-      this.contents.forEach(element => {
-        if (element.linkVideo) {
-
-          element.ytEmbed = this._sanitizer.bypassSecurityTrustResourceUrl(element.linkVideo.replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/"));
-
-        } else if (element.linkAudio) {
-
-          element.linkAudio = this._sanitizer.bypassSecurityTrustResourceUrl(element.linkAudio);
-
-        }
-      });
-
+    this.http.get("api/points/helpUserId/" + helpUserId).subscribe((res: any) => {
+      this.userContent = res;
 
       this.modalRef = this.modalService.show(this.modalTemplateRef, Object.assign({}, { class: 'modal-edit' }));
 
