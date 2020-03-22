@@ -38,20 +38,30 @@
           <input type="text" [(ngModel)]="register.email" id="2" class="fadeIn second" name="Email" placeholder="Email">
           <input type="text" [(ngModel)]="register.email2" id="3" class="fadeIn second" name="Repita Email"
             placeholder="Repita o Email">
-          <input type="text" [(ngModel)]="register.document" id="4" class="fadeIn second" name="document"
-            placeholder="Documento (CPF/Passaporte)">
+          <input type="text" [(ngModel)]="register.cellphone" id="6" class="fadeIn third" name="word"
+            placeholder="Celular">
+          <input type="text" [(ngModel)]="register.profissao" id="6" class="fadeIn third" name="word"
+            placeholder="Profissão">
+          <input type="text" [(ngModel)]="register.facebook" id="6" class="fadeIn third" name="word"
+            placeholder="Seu Facebook">
+          <input type="text" [(ngModel)]="register.instagram" id="6" class="fadeIn third" name="word"
+            placeholder="Seu Instagram">
           <input type="password" [(ngModel)]="register.password" id="5" class="fadeIn third" name="pass"
             placeholder="Senha">
           <input type="password" [(ngModel)]="register.password2" id="6" class="fadeIn third" name="word"
             placeholder="Repita Senha">
+
           <input *ngIf="!carregando" (click)="registrar()" class="fadeIn fourth botaoEntrar" style="cursor:pointer"
             value="Registrar">
           <div *ngIf="carregando" class="row justify-content-center"><button class="btn-get-started"><i
                 class="fa fa-spinner fa-pulse"></i></button>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="id" id="termo" [value]="true"
+            <input *ngIf="!carregando" class="form-check-input" type="checkbox" name="id" id="termo" [value]="true"
               [(ngModel)]="register.icAcceptTerms">
+            <div *ngIf="carregando" class="row justify-content-center"><button class="btn-get-started"><i
+                  class="fa fa-spinner fa-pulse"></i></button>
+            </div>
             <label class="form-check-label" for="termo">
               Li e concordo com o <a [routerLink]="">termo de uso</a>
             </label>

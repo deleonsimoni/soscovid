@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  Membros: [{
+  membros: [{
     nome: String,
     parentesco: String,
     idade: Number
@@ -52,36 +52,39 @@ const UserSchema = new mongoose.Schema({
     country: String,
     state: String
   },
-  lat: {
-    type: String,
-    required: true
+
+  help: {
+    lat: {
+      type: String
+    },
+    lng: {
+      type: String
+    },
+    necessidades: [{
+      produto: String
+    }],
+    obs: {
+      type: String
+    }
   },
-  lng: {
-    type: String,
-    required: true
-  },
-  phones: {
-    cellphone: String,
-    telephone: String
-  },
-  social: {
-    facebook: String,
-    instagran: String
-  },
-  trabalho: {
+
+  cellphone: {
     type: String
   },
-  necessidades: [{
-    produto: String,
-    qtd: Number
-  }],
-  obs: {
+  facebook: {
     type: String
-  }
-},
-  {
-    versionKey: false
-  });
+  },
+  instagran: {
+    type: String
+  },
+  profissao: {
+    type: String
+  },
+
+
+}, {
+  versionKey: false
+});
 
 
 module.exports = mongoose.model('User', UserSchema);

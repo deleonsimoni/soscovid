@@ -10,7 +10,7 @@
               </select>-->
       <div class="card" style="width: 18rem;">
         <div class="card-header" style="cursor: pointer;" (click)="exibirCategorias()">
-          Selecione a Categoria <i #categoriaSeta class="fa fa-chevron-down pull-right"></i>
+          Em que pode ajudar? <i #categoriaSeta class="fa fa-chevron-down pull-right"></i>
         </div>
 
         <ul [style.display]="isCategoriaAberta ? 'block' : 'none'" *ngFor="let categoria of categorias"
@@ -27,6 +27,12 @@
         </ul>
       </div>
 
+      <div class="card" style="width: 18rem;">
+        <div class="card-header" style="cursor: pointer; background-color: red; color: white;" (click)="modalSOS()">
+          S.O.S Pedir Ajuda <i #categoriaSeta class="fa fa-exclamation-triangle  pull-right"></i>
+        </div>
+      </div>
+
     </section>
   </div>
   <agm-map [latitude]="location.lat" [zoom]="location.zoom" [longitude]="location.lng" [styles]="styles">
@@ -37,6 +43,35 @@
 
   </agm-map>
 </div>
+
+<ng-template #callHelp>
+  <div class="modal-upload">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Preciso de Ajuda!</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body" style="background-color: red; color: white; padding: 4px, 4px, 4px, 4px;">
+      <div class="mt-2" *ngFor="let necessidade of necessidades; let i = index;">
+        O que está te faltando?
+        <button type="button" class="btn btn-danger" *ngIf="i > 0" (click)="removeHelpForm(i)">Remover</button>
+
+        <input type="text" name="nome_{{i}}" class="form-control mt-2" id="abc613" placeholder="Produto/Alimento"
+          [(ngModel)]="necessidade.produto" />
+      </div>
+      <button type="button" class="btn btn-success mt-2" (click)="addHelpForm()">+</button>
+
+      <textarea [(ngModel)]="help.obs" placeholder="Conte mais do que tem passado..." class="form-control mt-2"
+        id="exampleFormControlTextarea1" rows="3"></textarea>
+
+      <div class="justify-content-center">
+        <button class="btn btn-primary mt-2" (click)="canHelp()">Pedir Ajuda</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
 
 <ng-template #modalTemplate>
   <div class="modal-header">
@@ -53,34 +88,6 @@
     <app-abecedario *ngIf="categoriaSelecionada == 1" [contents]="contents" [isAdmin]="false"
       (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
     </app-abecedario>
-
-    <app-entrevista *ngIf="categoriaSelecionada == 2" [contents]="contents" [isAdmin]="false"
-      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
-    </app-entrevista>
-
-    <app-audio *ngIf="categoriaSelecionada == 3" [contents]="contents" [isAdmin]="false"
-      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
-    </app-audio>
-
-    <app-producao-academica *ngIf="categoriaSelecionada == 4" [contents]="contents" [isAdmin]="false"
-      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
-    </app-producao-academica>
-
-    <app-politicas *ngIf="categoriaSelecionada == 5" [contents]="contents" [isAdmin]="false"
-      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
-    </app-politicas>
-
-    <app-escolas *ngIf="categoriaSelecionada == 6" [contents]="contents" [isAdmin]="false"
-      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
-    </app-escolas>
-
-    <app-cursos *ngIf="categoriaSelecionada == 7" [contents]="contents" [isAdmin]="false"
-      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
-    </app-cursos>
-
-    <app-cineclubes *ngIf="categoriaSelecionada == 8" [contents]="contents" [isAdmin]="false"
-      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
-    </app-cineclubes>
 
   </div>
 </ng-template>

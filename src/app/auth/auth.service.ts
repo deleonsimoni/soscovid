@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { TokenStorage } from './token.storage';
+import { ToastrService } from 'ngx-toastr';
+import { Injectable, Inject } from '@angular/core';
 
 
 const TOKEN_KEY = '_ixdcnorg';
@@ -12,26 +13,32 @@ const TOKEN_KEY = '_ixdcnorg';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private token: TokenStorage) { }
+  constructor(private http: HttpClient,
+    private token: TokenStorage,
+    private toastr: ToastrService,
+    @Inject('BASE_API_URL') private baseUrl: string,
+  ) { }
 
   public $userSource = new Subject<any>();
 
   login(email: string, password: string): Observable<any> {
     return Observable.create(observer => {
 
-      this.http.post('/api/auth/login', {
+      this.http.post(`${this.baseUrl}/api/auth/login`, {
         email,
         password
       }).subscribe((data: any) => {
+
         observer.next({ user: data.user });
         this.setUser(data.user, data.token);
         this.token.saveToken(data.token);
         observer.complete();
       }, error => {
+
         if (error.status === 401) {
-          alert('Usuário ou senha inválidos');
+          this.toastr.error('Email ou senha inválidos', 'Erro: ');
         } else {
-          alert('Ocorreu um erro na autenticação, tente novamente mais tarde.');
+          this.toastr.error('Ocorreu um erro na autenticação, tente novamente mais tarde.', 'Erro: ');
         }
       });
 
@@ -49,14 +56,14 @@ export class AuthService {
 
   register(register): Observable<any> {
     return Observable.create(observer => {
-      this.http.post('/api/auth/register', register).subscribe((data: any) => {
+      this.http.post(`${this.baseUrl}/api/auth/register`, register).subscribe((data: any) => {
         observer.next({ user: data.user });
         this.setUser(data.user, data.token);
         this.token.saveToken(data.token);
         observer.complete();
       })
     }, error => {
-      alert('Ocorreu um erro na criação do usuário, tente novamente mais tarde.');
+      this.toastr.error('Ocorreu um erro na criação do usuário, tente novamente mais tarde.', 'Erro: ');
     });
   }
 
@@ -88,14 +95,14 @@ export class AuthService {
   }
 
   refresh() {
-    return this.http.get(`api/auth/refresh`);
+    return this.http.get(`${this.baseUrl}api/auth/refresh`);
   }
 
   me(): Observable<any> {
     return Observable.create(observer => {
       const tokenVal = this.token.getToken();
       if (!tokenVal) return observer.complete();
-      this.http.get('/api/auth/me').subscribe((data: any) => {
+      this.http.get(`${this.baseUrl}/api/auth/me`).subscribe((data: any) => {
         observer.next({ user: data.user });
         this.setUser(data.user, data.token);
         observer.complete();

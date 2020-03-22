@@ -21,76 +21,43 @@ export class LoginComponent {
     private builder: FormBuilder
   ) {
 
-    this.createForm();
 
   }
 
   email: string;
   password: string;
-  carregando: false;
+  carregando = false;
   isLogin = true;
   register: any = {};
   regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  public createForm() {
-    this.registerForm = this.builder.group({
-      fullname: [null],
-      membros: this.builder.group({
-        nome: [null],
-        parentesco: [null],
-        idade: [null]
-      }),
-      email: [null],
-      dateBirth: [null],
-      address: this.builder.group({
-        street: [null],
-        complement: [null],
-        num: [null],
-        zip: [null],
-        city: [null],
-        district: [null],
-        country: [null],
-        state: [null]
-      }),
-      lat: [null],
-      lng: [null],
-      phones: this.builder.group({
-        cellphone: [null],
-        telephone: [null]
-      }),
-      social: this.builder.group({
-        facebook: [null],
-        instagran: [null]
-      }),
-      trabalho: [null],
-      necessidades: this.builder.array([
-        this.createNecessityField()
-      ]),
-      obs: [null]
-    });
-  }
-
-  private createNecessityField() {
-    return this.builder.group({
-      produto: [null],
-      qtd: [null]
-    });
-  }
 
   login(): void {
-    if (!this.email || !this.password) {
-      alert('Preencha corretamente os campos de acesso.');
-    } else {
-      this.authService.login(this.email, this.password)
-        .subscribe(data => {
-          this.authService.setUser(data.user, data.token);
-          window.location.assign("/");
-        }, err => {
-          if (err.status === 401) {
-            this.toastr.error('Email ou senha inválidos', 'Erro: ');
-          }
-        });
+
+    this.carregando = false;
+
+    if (!this.email) {
+      this.toastr.error('Preencha o campo Email', 'Atenção: ');
+      return;
     }
+
+    if (!this.password) {
+      this.toastr.error('Preencha o campo Senha', 'Atenção: ');
+      return;
+    }
+
+    this.authService.login(this.email, this.password)
+      .subscribe(data => {
+        this.carregando = false;
+        this.authService.setUser(data.user, data.token);
+        window.location.assign("/mapas");
+      }, err => {
+        if (err.status === 401) {
+          this.carregando = false;
+          this.toastr.error('Email ou senha inválidos', 'Erro: ');
+        }
+      });
+
   }
 
   registrar(): void {
@@ -100,7 +67,7 @@ export class LoginComponent {
       return;
     }
 
-    if (!this.register.fullname || !this.register.email || !this.register.email2 || !this.register.document || !this.register.password || !this.register.password2) {
+    if (!this.register.fullname || !this.register.email || !this.register.email2 || !this.register.password || !this.register.password2) {
       this.toastr.error('Preencha todos os campos do formulário', 'Atenção: ');
       return;
     }
@@ -120,11 +87,17 @@ export class LoginComponent {
       return;
     }
 
+    this.carregando = true;
+
     this.authService.register(this.register)
       .subscribe(data => {
+        this.carregando = false;
+
         this.authService.setUser(data.user, data.token);
         window.location.assign("/");
       }, err => {
+        this.carregando = false;
+
         this.toastr.error('Servidor momentaneamente inoperante', 'Erro: ');
       });
 

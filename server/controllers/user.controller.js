@@ -4,18 +4,10 @@ const User = require('../models/user.model');
 const Gallery = require('../models/gallery.model');
 const config = require('../config/config');
 
-const userSchema = Joi.object({
-  fullname: Joi.string().required(),
-  email: Joi.string().email(),
-  mobileNumber: Joi.string().regex(/^[1-9][0-9]{9}$/),
-  password: Joi.string().required(),
-  repeatPassword: Joi.string().required().valid(Joi.ref('password'))
-})
-
 
 module.exports = {
   insert,
-
+  callHelp,
 }
 
 async function insert(user) {
@@ -23,7 +15,16 @@ async function insert(user) {
   delete user.password;
 
   //todo temover
-  user.icAdmin = true;
+  //user.icAdmin = true;
 
   return await new User(user).save();
+}
+
+
+async function callHelp(user, data) {
+
+  return await user.findByIdAndUpdate(user._id, data, {
+    new: true
+  })
+
 }

@@ -1,79 +1,31 @@
 <!-- Masthead -->
 
 <!-- Services -->
-<section class="text-white text-center bg-head" id="intro-carrousel">
-
-  <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="true" interval="10000" [keyboard]="true"
-    [pauseOnHover]="true" [wrap]="true" [activeId]="'slideTwo'">
-
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper img-responsive">
-        <img src="../../assets/img/carrosel/abecedarios.png" width="" alt="Random first slide" class="mh-100 img-fluid"
-          style="height: 50vh">
+<header class="masthead text-white text-center">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 mx-auto">
+        <h1 class="mb-5 sombra">Pronto para construir a história da escola?</h1>
       </div>
-      <div class="carousel-caption">
-        <!--  <h3>Abecedários</h3>-->
+      <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+        <form>
+          <div class="form-row">
+            <div class="col-12 col-md-9 mb-2 mb-md-0">
+              <input type="text" class="form-control form-control-lg" [(ngModel)]='itemPesquisa' name="first"
+                placeholder="ex: ESCOLAS, CADERNOS, DEPOIMENTOS..." />
+            </div>
+            <div class="col-12 col-md-3">
+              <button [routerLink]="'/mapas'" [queryParams]="itemPesquisa" class="btn btn-block btn-lg btn-primary">
+                Buscar
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-    </ng-template>
-
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper img-responsive">
-        <img src="../../assets/img/carrosel/conversaseentrevistas.png" width="" alt="Random first slide"
-          class="mh-100 img-fluid" style="height: 50vh">
-      </div>
-      <div class="carousel-caption">
-        <!-- <h3>Conversas e entrevistas</h3>-->
-      </div>
-    </ng-template>
-
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper img-responsive">
-        <img src="../../assets/img/carrosel/producaoacademica.png" width="" alt="Random first slide"
-          class="mh-100 img-fluid" style="height: 50vh">
-      </div>
-      <div class="carousel-caption">
-        <!--<h3>Produção acadêmica</h3>-->
-
-      </div>
-    </ng-template>
-
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper img-responsive">
-        <img src="../../assets/img/carrosel/cinematecas.png" width="" alt="Random first slide" class="mh-100 img-fluid"
-          style="height: 50vh">
-      </div>
-      <div class="carousel-caption">
-        <!-- <h3>Cinematecas</h3>-->
-
-      </div>
-    </ng-template>
-
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper img-responsive">
-        <img src="../../assets/img/carrosel/escolas.png" width="" alt="Random first slide" class="mh-100 img-fluid"
-          style="height: 50vh">
-        <!-- <img src="../../assets/img/encontros.jpg" width="740px" alt="Random first slide" class="mh-100 img-fluid"
-          style="height: 50vh">-->
-      </div>
-      <div class="carousel-caption">
-        <!-- <h3>Escolas</h3>-->
-
-      </div>
-    </ng-template>
-
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper img-responsive">
-        <img src="../../assets/img/carrosel/politicas.png" width="" alt="Random first slide" class="mh-100 img-fluid"
-          style="height: 50vh">
-      </div>
-      <div class="carousel-caption">
-        <!--  <h3>Politicas</h3>-->
-
-      </div>
-    </ng-template>
-
-  </ngb-carousel>
-</section>
+    </div>
+  </div>
+</header>
 
 
 
@@ -84,7 +36,7 @@
       <div class="col-lg-8" style="text-align: center;">
         <br />
 
-        <h2 class="mt-0"><u>Cinenaescola</u></h2>
+        <h2 class="mt-0"><u>Juntos Venceremos os Virus</u></h2>
         <hr class="divider light my-4">
         <p class="mb-4 " style="text-align: justify;text-justify: inter-word;">
 
@@ -118,328 +70,7 @@
     </div>
   </div>
 
-
-
-
-
-  <!--
-  <div class="table-responsive text-nowrap" style="padding:0px; margin:0px !important;">
-    <table class="table table-striped" style="padding:0px; margin:0px !important;">
-      <tbody>
-        <tr>
-          <td>
-            <div class="wrapper">
-              <div class="box">
-                <div class="boxes">
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                </div>
-                <div class="center_box" style="background: url(../../assets/img/1.jpg) center center no-repeat;">
-                </div>
-                <div class="boxes">
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                </div>
-              </div>
-              <div class="box">
-                <div class="boxes">
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                </div>
-                <div class="center_box" style="background: url(../../assets/img/2.jpg) center center no-repeat;">
-                </div>
-                <div class="boxes">
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                </div>
-              </div>
-              <div class="box">
-                <div class="boxes">
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                </div>
-                <div class="center_box" style="background: url(../../assets/img/3.jpg) center center no-repeat;">
-                </div>
-                <div class="boxes">
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                </div>
-              </div>
-              <div class="box">
-                <div class="boxes">
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                </div>
-                <div class="center_box" style="background: url(../../assets/img/4.jpg) center center no-repeat;">
-                </div>
-                <div class="boxes">
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                </div>
-              </div>
-              <div class="box">
-                <div class="boxes">
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                </div>
-                <div class="center_box" style="background: url(../../assets/img/5.jpg) center center no-repeat;">
-
-                </div>
-                <div class="boxes">
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                  <span class="small_box"></span>
-                </div>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-
 </section>
-
-
-
-
-<!-- Services
-<section class="content-section bg-primary text-white text-center" id="services">
-  <div class="container">
-    <div class="content-section-heading">
-      <h3 class="mb-0" style="color: #BDB8AC;">Conteúdos</h3>
-      <h2 class="mb-5">Aqui você encontrará</h2>
-    </div>
-    <div class="row">
-      <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-        <span class="service-icon rounded-circle mx-auto mb-3">
-          <i class="fa fa-address-card"></i>
-        </span>
-        <h4>
-          <strong>Abecedários</strong>
-        </h4>
-        <p class="text-faded mb-0">Vídeos de diálogos de cinema e educação</p>
-      </div>
-      <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-        <span class="service-icon rounded-circle mx-auto mb-3">
-          <i class="fa fa-camera"></i>
-        </span>
-        <h4>
-          <strong>Entrevistas</strong>
-        </h4>
-        <p class="text-faded mb-0">Entrevistas com diretores, cineastas, artistas</p>
-      </div>
-      <div class="col-lg-3 col-md-6 mb-5 mb-md-0">
-        <span class="service-icon rounded-circle mx-auto mb-3">
-          <i class="fa fa-volume-up"></i>
-        </span>
-        <h4>
-          <strong>podcast</strong>
-        </h4>
-        <p class="text-faded mb-0">Entrevistas em áudio sobre curiosidades de cinematecas
-          <i class=""></i>
-        </p>
-      </div>
-      <div class="col-lg-3 col-md-6">
-        <span class="service-icon rounded-circle mx-auto mb-3">
-          <i class="fa fa-graduation-cap "></i>
-        </span>
-        <h4>
-          <strong>Produção Acadêmica</strong>
-        </h4>
-        <p class="text-faded mb-0">Artigos e conteúdos criados pela parte acadêmica</p>
-      </div>
-    </div>
-  </div>
-</section> -->
-
-
-<!-- Portfolio -->
-<section class="content-section" style="background-color: #BDB8AC !important; padding-bottom: 0px !important;"
-  id="portfolio">
-
-  <div class="container-portfolio" style="padding-top: 15px;">
-    <div class="content-section-heading text-center">
-      <h3 class="mb-0" style="color: #F4E9DB;">COLABORAÇÕES RECENTES</h3>
-      <h2 class="mb-5" style="color: white;">Últimas postagens feitas na plataforma</h2>
-    </div>
-    <div class="row no-gutters">
-      <div class="col-lg-6">
-        <a class="portfolio-item" href="#">
-          <span class="caption">
-            <span class="caption-content">
-              <h2>Entrevista com ...</h2>
-              <p class="mb-0">Confira essa entrevista super construtiva</p>
-            </span>
-          </span>
-          <img class="img-fluid" src="../../assets/img/abecedario.jpg" alt="">
-        </a>
-      </div>
-      <div class="col-lg-6">
-        <a class="portfolio-item" href="#">
-          <span class="caption">
-            <span class="caption-content">
-              <h2>podcast Avenida de Mayo 3</h2>
-              <p class="mb-0">Política, cinema, dicas e muito mais!</p>
-            </span>
-          </span>
-          <img class="img-fluid" src="../../assets/img/sound.jpg" alt="">
-        </a>
-      </div>
-      <div class="col-lg-6">
-        <a class="portfolio-item" href="#">
-          <span class="caption">
-            <span class="caption-content">
-              <h2>Prodção Acadêmica Articulo dussel cine y educacion copia</h2>
-              <p class="mb-0">O artigo examina os vínculos entre o cinema e a escola</p>
-            </span>
-          </span>
-          <img class="img-fluid" src="../../assets/img/graduation.jpg" alt="">
-        </a>
-      </div>
-      <div class="col-lg-6">
-        <a class="portfolio-item" href="#">
-          <span class="caption">
-            <span class="caption-content">
-              <h2>Gabriela Agustowsky</h2>
-              <p class="mb-0">Conheça mais dos projetos Animate e Animar.</p>
-            </span>
-          </span>
-          <img class="img-fluid" src="../../assets/img/sound.jpg" alt="">
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Portfolio Section 
-<section id="portfolio">
-  <div class="container-fluid p-0">
-    <div class="row no-gutters">
-      <div class="col-lg-4 col-sm-6">
-        <a class="portfolio-box">
-          <img class="img-fluid" src="../assets/img/portfolio-2.jpg" alt="">
-          <div class="portfolio-box-caption">
-            <div class="project-category text-white-50">
-              Categoria: Escola
-            </div>
-            <div class="project-name">
-              Colégio Pedro II
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-lg-4 col-sm-6">
-        <a class="portfolio-box">
-          <img class="img-fluid" src="../assets/img/portfolio-2.jpg" alt="">
-          <div class="portfolio-box-caption">
-            <div class="project-category text-white-50">
-              Categoria: Escola
-            </div>
-            <div class="project-name">
-              Colégio Pedro II
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-lg-4 col-sm-6">
-        <a class="portfolio-box">
-          <img class="img-fluid" src="../assets/img/portfolio-2.jpg" alt="">
-          <div class="portfolio-box-caption">
-            <div class="project-category text-white-50">
-              Categoria: Escola
-            </div>
-            <div class="project-name">
-              Colégio Pedro II
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-lg-4 col-sm-6">
-        <a class="portfolio-box">
-          <img class="img-fluid" src="../assets/img/portfolio-2.jpg" alt="">
-          <div class="portfolio-box-caption">
-            <div class="project-category text-white-50">
-              Categoria: Escola
-            </div>
-            <div class="project-name">
-              Colégio Pedro II
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-lg-4 col-sm-6">
-        <a class="portfolio-box">
-          <img class="img-fluid" src="../assets/img/portfolio-2.jpg" alt="">
-          <div class="portfolio-box-caption">
-            <div class="project-category text-white-50">
-              Categoria: Escola
-            </div>
-            <div class="project-name">
-              Colégio Pedro II
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-lg-4 col-sm-6">
-        <a class="portfolio-box">
-          <img class="img-fluid" src="../assets/img/portfolio-2.jpg" alt="">
-          <div class="portfolio-box-caption p-3">
-            <div class="project-category text-white-50">
-              Categoria: Escola
-            </div>
-            <div class="project-name">
-              Colégio Pedro II
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>-->
-
-
 
 
 

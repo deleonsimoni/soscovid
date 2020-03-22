@@ -43,29 +43,27 @@ export class MapasComponent implements OnInit {
   gallerieSelect: any;
   points: any = {};
   point: any = {};
+  help: any = {};
   contents: any = {};
-
+  necessidades: any = [{ produto: "" }];
   categoriaSelecionada = 1;
   user: any;
+  lat: any;
+  lng: any;
   @ViewChild('categoriaSeta', { static: false }) categoriaSeta: ElementRef;
   @ViewChild('modalTemplate', { static: false }) modalTemplateRef: TemplateRef<any>;
-
+  @ViewChild('callHelp', { static: false }) callHelpModal: TemplateRef<any>;
 
   public categorias = [
-    { id: 1, name: 'Abecedários', icon: 'abcedario.png' },
-    { id: 2, name: 'Entrevistas', icon: 'entrevista.png' },
-    { id: 3, name: 'Podcasts', icon: 'poscast.png' },
-    { id: 4, name: 'Produção Acadêmica', icon: 'prodAcademica.png' },
-    { id: 5, name: 'Políticas', icon: 'politicas.png' },
-    { id: 6, name: 'Escolas', icon: 'escolas.png' },
-    { id: 7, name: 'Cursos', icon: 'cursos.png' },
-    { id: 8, name: 'Cineclubes', icon: 'cineclub.png' }
-
+    { id: 1, name: 'Arroz', icon: 'abcedario.png' },
+    { id: 2, name: 'Feijão', icon: 'entrevista.png' },
+    { id: 3, name: 'Água', icon: 'poscast.png' },
+    { id: 4, name: 'Macarrão', icon: 'prodAcademica.png' }
   ];
 
   location: Location = {
-    lat: 10.2989969,
-    lng: -78.2803034,
+    lat: -12.9140889,
+    lng: -52.7870321,
     zoom: 4
   };
 
@@ -76,7 +74,14 @@ export class MapasComponent implements OnInit {
     private toastr: ToastrService,
     private embedService: EmbedVideoService,
     private _sanitizer: DomSanitizer
-  ) { }
+  ) {
+    if (navigator) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        this.lng = +pos.coords.longitude;
+        this.lat = +pos.coords.latitude;
+      });
+    }
+  }
 
   ngOnInit() {
     this.carregando = true;
@@ -115,6 +120,39 @@ export class MapasComponent implements OnInit {
       this.toastr.error('Servidor momentaneamente inoperante.', 'Erro: ');
     });
 
+  }
+
+  canHelp() {
+
+    this.carregando = true;
+
+    let help = {
+      lat: this.lat,
+      lng: this.lng,
+      necessidades: this.necessidades,
+      obs: this.help.obs
+    }
+
+    this.http.post(`api/user/canHelp`, help).subscribe((res: any) => {
+      this.carregando = false;
+
+      if (res && res.temErro) {
+        this.toastr.error(res.mensagem, 'Erro: ');
+      } else {
+        this.modalRef.hide();
+        this.toastr.success(res.message, 'Sucesso');
+        this.necessidades = [{ produto: "" }];
+        this.help = {};
+      }
+    }, err => {
+
+      this.carregando = false;
+      this.toastr.error('Servidor momentaneamente inoperante.', 'Erro: ');
+    });
+  }
+
+  modalSOS() {
+    this.modalRef = this.modalService.show(this.callHelpModal, Object.assign({}, { class: 'modal-edit' }));
   }
 
   exibirCategorias() {
@@ -166,6 +204,16 @@ export class MapasComponent implements OnInit {
   getIconCategoria(categoria) {
     let icone = this.categorias.filter(element => element.id == categoria)[0].icon;
     return '../../assets/icones/' + icone;
+  }
+
+  addHelpForm() {
+    this.necessidades.push({
+      nome: '',
+      link: ''
+    });
+  }
+  removeHelpForm(i) {
+    this.necessidades.splice(i, 1);
   }
 
   styles = [

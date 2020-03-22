@@ -15,12 +15,20 @@ router.get('/downloadFile', downloadFile);
 router.get('/getGallerys', getGallerys);
 router.delete('/deleteDepoimento/:depoimentoId', deleteDepoimento);
 
+router.post('/callHelp', passport.authenticate('jwt', {
+  session: false
+}), asyncHandler(callHelp));
+
 router.route('/')
   .post(asyncHandler(insert));
 
-
 async function insert(req, res) {
   let user = await userCtrl.insert(req.body);
+  res.json(user);
+}
+
+async function callHelp(req, res) {
+  let user = await userCtrl.insert(req.user, req.body.data);
   res.json(user);
 }
 

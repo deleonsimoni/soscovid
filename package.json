@@ -7,6 +7,8 @@
     "serve": "node server",
     "start": "concurrently -c \"yellow.bold,green.bold\" -n \"SERVER,BUILD\" \"nodemon server\" \"ng build --watch \"",
     "build": "ng build --prod",
+    "gerarApp": "ng build --prod --base-href . --output-path \"C:\\desenv\\soscovid mobile\\SOSCOVID\\www\\\"",
+    "emularApp": "concurrently \"cd C:\\desenv\\soscovid mobile\\SOSCOVID\"  \"cordova emulate android\"",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -80,6 +80,10 @@ import { CineclubesComponent } from './cards/cineclubes/cineclubes.component';
   providers: [
     BsModalRef,
     {
+      provide: 'BASE_API_URL',
+      useValue: environment.host
+    },
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHeaderInterceptor,
       multi: true,
