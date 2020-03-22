@@ -64,55 +64,6 @@
                           Conteúdo</button>
 
 
-                        <div *ngIf="categoria == 1 && contents.length > 0">
-                          <app-abecedario [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
-                            (alterar)="reciverAlter($event)">
-                          </app-abecedario>
-                        </div>
-
-                        <div *ngIf="categoria == 2 && contents.length > 0">
-                          <app-entrevista [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
-                            (alterar)="reciverAlter($event)">
-                          </app-entrevista>
-                        </div>
-
-                        <div *ngIf="categoria == 3 && contents.length > 0">
-                          <app-audio [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
-                            (alterar)="reciverAlter($event)">
-                          </app-audio>
-                        </div>
-
-                        <div *ngIf="categoria == 4 && contents.length > 0">
-                          <app-producao-academica [contents]="contents" [isAdmin]="true"
-                            (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
-                          </app-producao-academica>
-                        </div>
-
-                        <div *ngIf="categoria == 5 && contents.length > 0">
-                          <app-politicas [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
-                            (alterar)="reciverAlter($event)">
-                          </app-politicas>
-                        </div>
-
-                        <div *ngIf="categoria == 6 && contents.length > 0">
-                          <app-escolas [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
-                            (alterar)="reciverAlter($event)">
-                          </app-escolas>
-                        </div>
-
-                        <div *ngIf="categoria == 7 && contents.length > 0">
-                          <app-cursos [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
-                            (alterar)="reciverAlter($event)">
-                          </app-cursos>
-                        </div>
-
-                        <div *ngIf="categoria == 8 && contents.length > 0">
-                          <app-cineclubes [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
-                            (alterar)="reciverAlter($event)">
-                          </app-cineclubes>
-                        </div>
-
-
                       </div>
 
                     </div>

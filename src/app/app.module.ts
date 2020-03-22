@@ -29,14 +29,6 @@ import { UploadComponent } from './upload/upload.component';
 import { environment } from '../environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EmbedVideo } from 'ngx-embed-video';
-import { AbecedarioComponent } from './cards/abecedario/abecedario.component';
-import { AudioComponent } from './cards/audio/audio.component';
-import { ProducaoAcademicaComponent } from './cards/producao-academica/producao-academica.component';
-import { EntrevistaComponent } from './cards/entrevista/entrevista.component';
-import { PoliticasComponent } from './cards/politicas/politicas.component';
-import { EscolasComponent } from './cards/escolas/escolas.component';
-import { CursosComponent } from './cards/cursos/cursos.component';
-import { CineclubesComponent } from './cards/cineclubes/cineclubes.component';
 
 @NgModule({
   declarations: [
@@ -45,15 +37,7 @@ import { CineclubesComponent } from './cards/cineclubes/cineclubes.component';
     HomeComponent,
     FooterComponent,
     MapasComponent,
-    UploadComponent,
-    AbecedarioComponent,
-    AudioComponent,
-    ProducaoAcademicaComponent,
-    EntrevistaComponent,
-    PoliticasComponent,
-    EscolasComponent,
-    CursosComponent,
-    CineclubesComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
