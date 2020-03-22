@@ -73,12 +73,9 @@ body {
 
 @media only screen and (max-width: 600px) {
   .modal-body {
-    padding: 0px;
+    padding: 0.8em;
     margin-top: 7em;
-  }
-
-  .modal-edit {
-    max-width: 100%;
+    border-radius: 8px;
   }
 }
 
