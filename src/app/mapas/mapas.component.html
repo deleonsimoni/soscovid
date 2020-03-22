@@ -16,10 +16,10 @@
         <ul [style.display]="isCategoriaAberta ? 'block' : 'none'" *ngFor="let categoria of categorias"
           class="dontShow list-group list-group-flush">
 
-          <li id="{{categoria.id}}" [ngClass]="{'success':categoriaSelecionada == categoria.id}"
-            style="cursor: pointer;" (click)="mudarCategoria(categoria.id)" class="list-group-item text-left">
-            <img *ngIf="categoria.icon" style="margin-right: 10px;" [src]="getIconCategoria(categoria.id)" width="30px"
-              height="30px" />{{ categoria.name }}
+          <li id="{{categoria.produto}}" [ngClass]="{'success':produtoSelecionado == categoria.produto}"
+            style="cursor: pointer;" (click)="mudarCategoria(categoria.produto)" class="list-group-item text-left">
+            <img *ngIf="categoria.icon" style="margin-right: 10px;" [src]="getIconCategoria(categoria.produto)"
+              width="30px" height="30px" />{{ categoria.produto }}
             <span *ngIf="carregando" class="pull-right"><i style='text-align: center;'
                 class="fa fa-spinner fa-spin"></i></span>
           </li>
@@ -37,7 +37,7 @@
   </div>
   <agm-map [latitude]="location.lat" [zoom]="location.zoom" [longitude]="location.lng" [styles]="styles">
 
-    <agm-marker *ngFor="let point of points" [iconUrl]="getIconCategoria(categoriaSelecionada)"
+    <agm-marker *ngFor="let point of points" [iconUrl]="getIconCategoria(produtoSelecionado)"
       (markerClick)="selectMarker(point._id)" [latitude]="point.help.lat" [longitude]="point.help.lng">
     </agm-marker>
 
@@ -77,7 +77,7 @@
   <div class="modal-header">
     <div class="pull-left">
       <h4 class="modal-title">Somar forças</h4>
-      <!--<b>Categoria:</b> {{getNameCategoria(categoriaSelecionada)}}-->
+      <!--<b>Categoria:</b> {{getNameCategoria(produtoSelecionado)}}-->
     </div>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>

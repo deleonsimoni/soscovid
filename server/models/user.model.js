@@ -61,7 +61,8 @@ const UserSchema = new mongoose.Schema({
       type: String
     },
     necessidades: [{
-      produto: String
+      produto: String,
+      icon: String
     }],
     obs: {
       type: String

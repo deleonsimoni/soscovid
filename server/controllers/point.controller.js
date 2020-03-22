@@ -31,7 +31,7 @@ module.exports = {
   getPoints,
   getNameCategorias,
   helpUserId,
-
+  getByProduto,
 }
 
 async function create(point) {
@@ -180,6 +180,15 @@ async function helpUserId(userId) {
   return await User.findById(userId);
 }
 
+async function getByProduto(produto) {
+
+  return await User.find({
+      'help.necessidades.produto': produto
+    })
+    .sort({
+      createAt: 1
+    }).select('_id help');
+}
 
 
 

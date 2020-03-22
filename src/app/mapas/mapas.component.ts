@@ -47,7 +47,7 @@ export class MapasComponent implements OnInit {
   help: any = {};
   userContent: any = {};
   necessidades: any = [{ produto: "" }];
-  categoriaSelecionada = 1;
+  produtoSelecionado = 1;
   user: any;
   lat: any;
   lng: any;
@@ -55,17 +55,12 @@ export class MapasComponent implements OnInit {
   @ViewChild('modalTemplate', { static: false }) modalTemplateRef: TemplateRef<any>;
   @ViewChild('callHelp', { static: false }) callHelpModal: TemplateRef<any>;
 
-  public categorias = [
-    { id: 1, name: 'Arroz', icon: 'abcedario.png' },
-    { id: 2, name: 'Feijão', icon: 'entrevista.png' },
-    { id: 3, name: 'Água', icon: 'poscast.png' },
-    { id: 4, name: 'Macarrão', icon: 'prodAcademica.png' }
-  ];
+  public categorias: any = [];
 
   location: Location = {
-    lat: -12.9140889,
-    lng: -52.7870321,
-    zoom: 4
+    lat: this.lat,
+    lng: this.lng,
+    zoom: 3
   };
 
   constructor(public mapsApiLoader: MapsAPILoader,
@@ -82,6 +77,8 @@ export class MapasComponent implements OnInit {
       navigator.geolocation.getCurrentPosition(pos => {
         this.lng = +pos.coords.longitude;
         this.lat = +pos.coords.latitude;
+        this.location.lng = this.lng;
+        this.location.lng = this.lat;
       });
     }
   }
@@ -91,7 +88,12 @@ export class MapasComponent implements OnInit {
     this.http.get(`${this.baseUrl}/points`).subscribe((res: any) => {
       this.carregando = false;
       this.points = res;
-      //this.categorias = res;
+
+      res.forEach(help => {
+        help.help.necessidades.forEach(necessidade => {
+          this.categorias.push(necessidade);
+        });
+      });
 
     }, err => {
       this.carregando = false;
@@ -125,9 +127,11 @@ export class MapasComponent implements OnInit {
       obs: this.help.obs
     }
 
-    let requisicao = help;
+    help.necessidades.forEach(element => {
+      element.icon = "abcedario.png"
+    });
 
-    this.http.post(`${this.baseUrl}/user/callHelp`, requisicao).subscribe((res: any) => {
+    this.http.post(`${this.baseUrl}/user/callHelp`, help).subscribe((res: any) => {
       this.carregando = false;
 
       if (res && res.temErro) {
@@ -163,10 +167,10 @@ export class MapasComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
-  mudarCategoria(id) {
+  mudarCategoria(produto) {
     this.carregando = true;
-    this.categoriaSelecionada = id;
-    this.http.get("api/points/" + this.categoriaSelecionada).subscribe((res: any) => {
+    this.produtoSelecionado = produto;
+    this.http.get("api/points/getByProduto/" + this.produtoSelecionado).subscribe((res: any) => {
       this.carregando = false;
       this.points = res;
     }, err => {
@@ -196,8 +200,8 @@ export class MapasComponent implements OnInit {
   }
 
   getIconCategoria(categoria) {
-    let icone = this.categorias.filter(element => element.id == categoria)[0].icon;
-    return '../../assets/icones/' + icone;
+    //let icone = this.categorias.filter(element => element.produto == categoria)[0].icon;
+    return '../../assets/icones/' + 'abcedario.png';
   }
 
   addHelpForm() {

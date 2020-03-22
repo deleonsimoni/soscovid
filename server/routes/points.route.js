@@ -23,6 +23,7 @@ module.exports = router;
 router.get('/', asyncHandler(getPoints));
 router.get('/categoriasName', asyncHandler(getNameCategorias));
 router.get('/helpUserId/:userId', asyncHandler(helpUserId));
+router.get('/getByProduto/:produto', asyncHandler(getByProduto));
 
 
 
@@ -104,6 +105,13 @@ async function getPointsByCategoria(req, res) {
   res.json(user);
 }
 
+
+
+
+
+
+
+
 async function getPoints(req, res) {
   let user = await pointsCtrl.getPoints(req);
   res.json(user);
@@ -111,6 +119,11 @@ async function getPoints(req, res) {
 
 async function getNameCategorias(req, res) {
   let user = await pointsCtrl.getNameCategorias(req);
+  res.json(user);
+}
+
+async function getByProduto(req, res) {
+  let user = await pointsCtrl.getByProduto(req.params.produto);
   res.json(user);
 }
 
