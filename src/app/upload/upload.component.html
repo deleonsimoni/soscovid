@@ -1,0 +1,468 @@
+<!--==========================
+    Submission
+  ============================-->
+<main id="submission">
+  <div class="container submission-content">
+    <div class="row">
+      <div class="offset-md-1 col-md-10" style="margin-top: 150px;">
+        <div class="box">
+          <div class="form">
+            <div class="section-header">
+              <h2>Upload Conteúdo</h2>
+            </div>
+
+            <div>
+              <div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <div>
+                      <select class="form-control" id="opt" [(ngModel)]="categoria" (change)="mudarCategoria()">
+                        <option disabled="true" [value]="0">Selecione a
+                          categoria</option>
+
+                        <option *ngFor="let option of categorias" [value]="option.id">
+                          {{ option.name }}
+                        </option>
+                      </select>
+                    </div>
+                    <div *ngIf="categoria">
+
+                      <div>
+                        <hr />
+                        Selecione no mapa o local para inclusão das informações.<br />
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Informe a localidade"
+                            aria-label="Informe a localidade" [(ngModel)]="address" aria-describedby="basic-addon2">
+                          <div class="input-group-append">
+                            <button *ngIf="!carregandoMapa" (click)="findLocation()" class="btn btn-primary"
+                              type="button">Pesquisar</button>
+                            <button *ngIf="carregandoMapa" class="btn btn-primary" type="button"><i
+                                class="fa fa-spinner fa-pulse"></i>Aguarde...</button>
+                          </div>
+                        </div>
+                        <br />
+
+                        <agm-map #map [latitude]="locationMap.lat" [longitude]="locationMap.lng"
+                          [zoom]="locationMap.zoom" [styles]="styles" (mapClick)="placeMarker($event)">
+                          <agm-marker *ngIf="!point._id" [latitude]="point.lat" [longitude]="point.lng">
+                          </agm-marker>
+                          <agm-marker *ngFor="let point of points" (markerClick)="selectMarker(point)"
+                            [latitude]="point.lat" [longitude]="point.lng">
+                          </agm-marker>
+                        </agm-map>
+
+                      </div>
+
+                      <div *ngIf="point.lng">
+                        <input type="text" name="titlae" class="form-control mt-2" id="title"
+                          placeholder="Nome do local para o ponto" [(ngModel)]="point.nome" />
+
+                        <hr />
+
+
+                        <button (click)="openModal($event)" type="button">Adicionar
+                          Conteúdo</button>
+
+
+                        <div *ngIf="categoria == 1 && contents.length > 0">
+                          <app-abecedario [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
+                            (alterar)="reciverAlter($event)">
+                          </app-abecedario>
+                        </div>
+
+                        <div *ngIf="categoria == 2 && contents.length > 0">
+                          <app-entrevista [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
+                            (alterar)="reciverAlter($event)">
+                          </app-entrevista>
+                        </div>
+
+                        <div *ngIf="categoria == 3 && contents.length > 0">
+                          <app-audio [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
+                            (alterar)="reciverAlter($event)">
+                          </app-audio>
+                        </div>
+
+                        <div *ngIf="categoria == 4 && contents.length > 0">
+                          <app-producao-academica [contents]="contents" [isAdmin]="true"
+                            (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
+                          </app-producao-academica>
+                        </div>
+
+                        <div *ngIf="categoria == 5 && contents.length > 0">
+                          <app-politicas [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
+                            (alterar)="reciverAlter($event)">
+                          </app-politicas>
+                        </div>
+
+                        <div *ngIf="categoria == 6 && contents.length > 0">
+                          <app-escolas [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
+                            (alterar)="reciverAlter($event)">
+                          </app-escolas>
+                        </div>
+
+                        <div *ngIf="categoria == 7 && contents.length > 0">
+                          <app-cursos [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
+                            (alterar)="reciverAlter($event)">
+                          </app-cursos>
+                        </div>
+
+                        <div *ngIf="categoria == 8 && contents.length > 0">
+                          <app-cineclubes [contents]="contents" [isAdmin]="true" (remover)="reciverDelete($event)"
+                            (alterar)="reciverAlter($event)">
+                          </app-cineclubes>
+                        </div>
+
+
+                      </div>
+
+                    </div>
+                  </div>
+                  <div *ngIf="point?.lat && (abecedario || audio || producaoAcademica || entrevista)">
+                    <div class="">
+                      <!--<button class="btn btn-primary mb-5" *ngIf="!carregando" (click)="upload()">Salvar</button>-->
+
+                      <div *ngIf="carregando" class=""><button class="btn btn-primary"><i
+                            class="fa fa-spinner fa-pulse"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<ng-template #abecedarioModal>
+  <div class="modal-upload">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Abecedário</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <input type="text" name="title" class="form-control mt-2" id="abc1" placeholder="Nome"
+        [(ngModel)]="abecedario.nome" required />
+      <input type="text" name="title" class="form-control mt-2" id="abc12" placeholder="URL do abecedário (YouTube)"
+        [(ngModel)]="abecedario.linkVideo" required />
+      <input type="text" name="title" class="form-control mt-2" id="abc13" placeholder="Entrevistada(o)"
+        [(ngModel)]="abecedario.entrevistado" />
+      <input type="text" name="title" class="form-control mt-2" id="abc14" placeholder="País"
+        [(ngModel)]="abecedario.pais" />
+      <input type="text" name="title" class="form-control mt-2" id="abc5" placeholder="Duração"
+        [(ngModel)]="abecedario.duracao" />
+      <textarea [(ngModel)]="abecedario.descricao" placeholder="Descrição" class="form-control mt-2"
+        id="exampleFormControlTextarea1" rows="3"></textarea>
+
+
+
+      <div class="mt-2" *ngFor="let linkExtra of links; let i = index;">
+        Link Extra (PDF, Imagens, etc...)
+        <button type="button" class="btn btn-danger" *ngIf="i > 0" (click)="removeLinkExtraForm(i)">Remover</button>
+
+        <input type="text" name="nome_{{i}}" class="form-control mt-2" id="abc613" placeholder="Nome do Conteúdo"
+          [(ngModel)]="linkExtra.nome" />
+        <input type="text" name="link_{{i}}" class="form-control mt-2" id="abc624" placeholder="Link para o conteúdo"
+          [(ngModel)]="linkExtra.link" />
+      </div>
+
+
+      <button type="button" class="btn btn-success mt-2" (click)="addLinkExtraForm()">+ Link</button>
+
+      <div class="justify-content-center">
+        <button class="btn btn-primary mt-2" (click)="addContent()">Salvar Abecedário</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #entrevistaModal>
+  <div class="modal-upload">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Entrevista</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Verbete"
+        [(ngModel)]="entrevista.verbete" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="URL vídeo (YouTube)"
+        [(ngModel)]="entrevista.linkVideo" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Entrevistada(o)"
+        [(ngModel)]="entrevista.entrevistado" />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="País"
+        [(ngModel)]="entrevista.pais" />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Duração"
+        [(ngModel)]="entrevista.duracao" />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Formato"
+        [(ngModel)]="entrevista.formato" />
+      <textarea [(ngModel)]="entrevista.descricao" placeholder="Descrição" class="form-control mt-2"
+        id="exampleFormControlTextarea1" rows="3"></textarea>
+
+      <div class="mt-2" *ngFor="let linkExtra of links; let i = index;">
+        Link Extra (PDF, Imagens, etc...)
+        <button type="button" class="btn btn-danger" *ngIf="i > 0" (click)="removeLinkExtraForm(i)">Remover</button>
+
+        <input type="text" name="nome_{{i}}" class="form-control mt-2" id="abc65" placeholder="Nome do Conteúdo"
+          [(ngModel)]="linkExtra.nome" />
+        <input type="text" name="link_{{i}}" class="form-control mt-2" id="abc66" placeholder="Link para o conteúdo"
+          [(ngModel)]="linkExtra.link" />
+      </div>
+
+
+      <button type="button" class="btn btn-success mt-2" (click)="addLinkExtraForm()">+ Link</button>
+
+
+      <div class="justify-content-center">
+        <button class="btn btn-primary mt-2" (click)="addContent()">Salvar Entrevista</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #audioModal>
+  <div class="modal-upload">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Áudio</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="URL áudio"
+        [(ngModel)]="audio.linkAudio" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Entrevistada(o)"
+        [(ngModel)]="audio.entrevistado" />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="País"
+        [(ngModel)]="audio.pais" />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Duração"
+        [(ngModel)]="audio.duracao" />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Formato"
+        [(ngModel)]="audio.formato" />
+      <textarea [(ngModel)]="audio.descricao" placeholder="Descrição" class="form-control mt-2"
+        id="exampleFormControlTextarea1" rows="3"></textarea>
+
+      <div class="mt-2" *ngFor="let linkExtra of links; let i = index;">
+        Link Extra (PDF, Imagens, etc...)
+        <button type="button" class="btn btn-danger" *ngIf="i > 0" (click)="removeLinkExtraForm(i)">Remover</button>
+
+        <input type="text" name="nome_{{i}}" class="form-control mt-2" id="abc67" placeholder="Nome do Conteúdo"
+          [(ngModel)]="linkExtra.nome" />
+        <input type="text" name="link_{{i}}" class="form-control mt-2" id="abc68" placeholder="Link para o conteúdo"
+          [(ngModel)]="linkExtra.link" />
+      </div>
+
+
+      <button type="button" class="btn btn-success mt-2" (click)="addLinkExtraForm()">+ Link</button>
+
+      <div class="justify-content-center">
+        <button class="btn btn-primary mt-2" (click)="addContent()">Salvar Audio</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #producaoAcademicaModal>
+  <div class="modal-upload">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Produção Acadêmica</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Titulo"
+        [(ngModel)]="producaoAcademica.titulo" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Autoria"
+        [(ngModel)]="producaoAcademica.autoria" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="País"
+        [(ngModel)]="producaoAcademica.pais" />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Formato"
+        [(ngModel)]="producaoAcademica.formato" />
+      <textarea [(ngModel)]="producaoAcademica.descricao" placeholder="Descrição" class="form-control mt-2"
+        id="exampleFormControlTextarea1" rows="3"></textarea>
+
+      <div class="mt-2" *ngFor="let linkExtra of links; let i = index;">
+        Link Extra (PDF, Imagens, etc...)
+        <button type="button" class="btn btn-danger" *ngIf="i > 0" (click)="removeLinkExtraForm(i)">Remover</button>
+
+        <input type="text" name="nome_{{i}}" class="form-control mt-2" id="abc69" placeholder="Nome do Conteúdo"
+          [(ngModel)]="linkExtra.nome" />
+        <input type="text" name="link_{{i}}" class="form-control mt-2" id="abc610" placeholder="Link para o conteúdo"
+          [(ngModel)]="linkExtra.link" />
+      </div>
+
+
+      <button type="button" class="btn btn-success mt-2" (click)="addLinkExtraForm()">+ Link</button>
+
+      <div class="justify-content-center">
+        <button class="btn btn-primary mt-2" (click)="addContent()">Salvar Produção Acadêmica</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #politicasModal>
+  <div class="modal-upload">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Politicas</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Nome"
+        [(ngModel)]="politica.nome" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="País"
+        [(ngModel)]="politica.pais" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Cidade"
+        [(ngModel)]="politica.cidade" required />
+
+
+      <div class="mt-2" *ngFor="let linkExtra of links; let i = index;">
+        Link Extra (PDF, Imagens, etc...)
+        <button type="button" class="btn btn-danger" *ngIf="i > 0" (click)="removeLinkExtraForm(i)">Remover</button>
+
+        <input type="text" name="nome_{{i}}" class="form-control mt-2" id="abc69" placeholder="Nome do Conteúdo"
+          [(ngModel)]="linkExtra.nome" />
+        <input type="text" name="link_{{i}}" class="form-control mt-2" id="abc610" placeholder="Link para o conteúdo"
+          [(ngModel)]="linkExtra.link" />
+      </div>
+
+
+      <button type="button" class="btn btn-success mt-2" (click)="addLinkExtraForm()">+ Link</button>
+
+      <div class="justify-content-center">
+        <button class="btn btn-primary mt-2" (click)="addContent()">Salvar Politica</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #escolasModal>
+  <div class="modal-upload">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Escolas</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Nome" [(ngModel)]="escola.nome"
+        required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="País" [(ngModel)]="escola.pais"
+        required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Cidade"
+        [(ngModel)]="escola.cidade" required />
+
+      <div class="mt-2" *ngFor="let linkExtra of links; let i = index;">
+        Link Extra (PDF, Imagens, etc...)
+        <button type="button" class="btn btn-danger" *ngIf="i > 0" (click)="removeLinkExtraForm(i)">Remover</button>
+
+        <input type="text" name="nome_{{i}}" class="form-control mt-2" id="abc69" placeholder="Nome do Conteúdo"
+          [(ngModel)]="linkExtra.nome" />
+        <input type="text" name="link_{{i}}" class="form-control mt-2" id="abc610" placeholder="Link para o conteúdo"
+          [(ngModel)]="linkExtra.link" />
+      </div>
+
+
+      <button type="button" class="btn btn-success mt-2" (click)="addLinkExtraForm()">+ Link</button>
+
+      <div class="justify-content-center">
+        <button class="btn btn-primary mt-2" (click)="addContent()">Salvar Escola</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #cursosModal>
+  <div class="modal-upload">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Cursos</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Nome" [(ngModel)]="curso.nome"
+        required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Estado"
+        [(ngModel)]="curso.estado" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Universidade"
+        [(ngModel)]="curso.universidade" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Faculdade"
+        [(ngModel)]="curso.faculdade" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Página"
+        [(ngModel)]="curso.pagina" />
+
+      <div class="mt-2" *ngFor="let linkExtra of links; let i = index;">
+        Link Extra (PDF, Imagens, etc...)
+        <button type="button" class="btn btn-danger" *ngIf="i > 0" (click)="removeLinkExtraForm(i)">Remover</button>
+
+        <input type="text" name="nome_{{i}}" class="form-control mt-2" id="abc69" placeholder="Nome do Conteúdo"
+          [(ngModel)]="linkExtra.nome" />
+        <input type="text" name="link_{{i}}" class="form-control mt-2" id="abc610" placeholder="Link para o conteúdo"
+          [(ngModel)]="linkExtra.link" />
+      </div>
+
+
+      <button type="button" class="btn btn-success mt-2" (click)="addLinkExtraForm()">+ Link</button>
+
+      <div class="justify-content-center">
+        <button class="btn btn-primary mt-2" (click)="addContent()">Salvar Cursos</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #cineclubesmodal>
+  <div class="modal-upload">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Cineclubes</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Nome"
+        [(ngModel)]="cineclube.nome" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="País"
+        [(ngModel)]="cineclube.pais" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Cidade"
+        [(ngModel)]="cineclube.cidade" required />
+      <input type="text" name="title" class="form-control mt-2" id="title" placeholder="Página"
+        [(ngModel)]="cineclube.pagina" />
+
+
+      <div class="mt-2" *ngFor="let linkExtra of links; let i = index;">
+        Link Extra (PDF, Imagens, etc...)
+        <button type="button" class="btn btn-danger" *ngIf="i > 0" (click)="removeLinkExtraForm(i)">Remover</button>
+
+        <input type="text" name="nome_{{i}}" class="form-control mt-2" id="abc69" placeholder="Nome do Conteúdo"
+          [(ngModel)]="linkExtra.nome" />
+        <input type="text" name="link_{{i}}" class="form-control mt-2" id="abc610" placeholder="Link para o conteúdo"
+          [(ngModel)]="linkExtra.link" />
+      </div>
+
+
+      <button type="button" class="btn btn-success mt-2" (click)="addLinkExtraForm()">+ Link</button>
+
+      <div class="justify-content-center">
+        <button class="btn btn-primary mt-2" (click)="addContent()">Salvar Cineclube</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

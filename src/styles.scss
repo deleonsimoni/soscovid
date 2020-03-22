@@ -1,0 +1,87 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~angular-tree-component/dist/angular-tree-component.css';
+@import '~@angular/material/theming';
+@import '~dragula/dist/dragula.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+
+//@import '~src/assets/scss/landing-page.scss';
+
+$custom-typography: mat-typography-config($font-family: 'Exo'
+);
+
+@include mat-core($custom-typography);
+
+body {
+  background-color: aliceblue;
+  margin: 0;
+
+  app-root * {
+    font-family: 'Exo', sans-serif;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.modal-edit {
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Editar o carrocel test */
+.modal-content{
+  background-color: transparent;
+  border: none !important;
+  border-radius: 0px !important;
+}
+.modal-header {
+  border: none !important;
+  color: white;
+  background-color: black;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 1;
+  padding: 2em;
+  width: 100%;
+}
+.modal-body{
+  margin-top: 6em;
+}
+@media only screen and (max-width: 600px) {
+  .modal-body{
+    padding: 0px;
+    margin-top: 7em;
+  }
+  .modal-edit {
+    max-width: 100%;
+  }
+}
+/* fim */
+
+.carousel-control-prev {
+  width: 1em;
+}
+.carousel-control-next {
+  width: 1em;
+}

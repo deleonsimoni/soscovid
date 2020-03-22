@@ -1,0 +1,39 @@
+#submission {
+  color: white;
+  agm-map {
+    height: 300px;
+  }
+  padding: 90px 0 40px 0;
+  .box {
+    h4 {
+      margin-left: 0px;
+    }
+    p {
+      margin-left: 0px;
+    }
+  }
+  background-color: #435F76;
+  .btn-get-started {
+    background-color: #435F76;
+    color: #fff;
+    width: 80%;
+    border: none;
+    margin: 8px 0px;
+    height: calc(1.5em + 0.75rem + 2px);
+    i {
+      font-size: 14px;
+    }
+  }
+}
+
+.row {
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  height: 100vh;
+}
+.modal-upload{
+  background-color: white;
+}

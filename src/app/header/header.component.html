@@ -1,0 +1,44 @@
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
+  <div class="container">
+    <a style="font-size: large;" style="margin-top: -18px;" class="" href="#page-top" [routerLink]="['/']"
+      fragment="intro-carrousel">
+      <img class="img-responsive" style="margin-top: 0px;" height="130px" src="../../assets/img/logo3.png" />
+    </a>
+    <button aria-label="Toggle navigation"
+      class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button"
+      data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive">
+
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li *ngIf="user" class="nav-item mx-0 mx-lg-1">
+          <a style="color:white" class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">Olá,
+            {{getShortName(user?.fullname)}}</a>
+        </li>
+        <li class="nav-item mx-0 mx-lg-1">
+          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/mapas">acesse</a>
+        </li>
+        <!--<li class="nav-item mx-0 mx-lg-1">
+          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" [routerLink]="['/']"
+            fragment="services">Conteúdos</a>
+        </li>-->
+
+        <li *ngIf="user && user.icAdmin" class="nav-item mx-0 mx-lg-1">
+          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/upload">upload</a>
+        </li>
+        <li *ngIf="!user" class="nav-item mx-0 mx-lg-1">
+          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/auth/login">colabore</a>
+        </li>
+        <li class="nav-item mx-0 mx-lg-1">
+          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" [routerLink]="['/']"
+            fragment="portfolio">contato</a>
+        </li>
+        <li *ngIf="user" class="nav-item mx-0 mx-lg-1">
+          <a href class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" (click)="logout()">sair</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

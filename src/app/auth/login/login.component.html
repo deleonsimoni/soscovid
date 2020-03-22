@@ -1,0 +1,77 @@
+<main id="login">
+
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+      <h2 class="active" *ngIf="isLogin"> Entrar </h2>
+      <h2 class="active" *ngIf="!isLogin"> Registrar </h2>
+
+      <h2 class="inactive underlineHover"> </h2>
+
+      <div id="formlogin" *ngIf="isLogin">
+        <!-- Icon -->
+        <div class="fadeIn first">
+          <img src="../../assets/img/logo.png" id="icon" alt="User Icon" />
+        </div>
+
+        <!-- Login Form -->
+        <form>
+          <input type="text" [(ngModel)]="email" id="login" class="fadeIn second" name="login" placeholder="Email">
+          <input type="password" [(ngModel)]="password" id="password" class="fadeIn third" name="login"
+            placeholder="Senha">
+          <input *ngIf="!carregando" (click)="login()" class="fadeIn fourth botaoEntrar" style="cursor:pointer"
+            value="Acessar">
+          <div *ngIf="carregando" class="row justify-content-center"><button class="btn-get-started"><i
+                class="fa fa-spinner fa-pulse"></i></button>
+          </div>
+        </form>
+      </div>
+
+
+      <div id="formlogin" *ngIf="!isLogin">
+
+
+        <!-- Login Form -->
+        <div>
+          <input type="text" [(ngModel)]="register.fullname" id="1" class="fadeIn second" name="Nome Completo"
+            placeholder="Nome Completo">
+          <input type="text" [(ngModel)]="register.email" id="2" class="fadeIn second" name="Email" placeholder="Email">
+          <input type="text" [(ngModel)]="register.email2" id="3" class="fadeIn second" name="Repita Email"
+            placeholder="Repita o Email">
+          <input type="text" [(ngModel)]="register.document" id="4" class="fadeIn second" name="document"
+            placeholder="Documento (CPF/Passaporte)">
+          <input type="password" [(ngModel)]="register.password" id="5" class="fadeIn third" name="pass"
+            placeholder="Senha">
+          <input type="password" [(ngModel)]="register.password2" id="6" class="fadeIn third" name="word"
+            placeholder="Repita Senha">
+          <input *ngIf="!carregando" (click)="registrar()" class="fadeIn fourth botaoEntrar" style="cursor:pointer"
+            value="Registrar">
+          <div *ngIf="carregando" class="row justify-content-center"><button class="btn-get-started"><i
+                class="fa fa-spinner fa-pulse"></i></button>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="id" id="termo" [value]="true"
+              [(ngModel)]="register.icAcceptTerms">
+            <label class="form-check-label" for="termo">
+              Li e concordo com o <a [routerLink]="">termo de uso</a>
+            </label>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        <a *ngIf="!isLogin" style="cursor: pointer" class="underlineHover" (click)="isLogin = true">Já possui login</a>
+
+        <a *ngIf="isLogin" style="cursor: pointer" class="underlineHover" (click)="isLogin = false">Registrar</a><br>
+        <!--<a *ngIf="isLogin" style="cursor: pointer" class="underlineHover">Esqueceu a Senha?</a>-->
+      </div>
+
+
+    </div>
+  </div>
+
+</main>

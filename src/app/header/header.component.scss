@@ -1,0 +1,46 @@
+.bg-secondary {
+    background-color: black !important; /* For browsers that do not support gradients */
+    //background-image: linear-gradient(rgb(255, 198, 43), #E6D927);
+}
+
+.paleta-de-cores{
+    color: #435F76;
+    color: #F4E9DB;
+    color: #BDB8AC;
+    color: #DC8573;
+    color: #E16766;
+}
+
+
+.titulo{
+    font-family: cursive;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    background-color: transparent;
+    font-weight: 700;
+}
+
+a:hover {
+    color: #435F76;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer!important;
+}
+
+.bg-primary {
+    background-color: transparent !important;
+    color: #BDB8AC !important;
+    font-size: 30px;
+}
+
+a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-primary:hover {
+    background-color: transparent !important;
+    color: black !important;
+    font-size: 30px;
+}

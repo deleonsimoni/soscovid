@@ -1,0 +1,86 @@
+<div id="wrapper">
+  <div id="over_map">
+
+    <section class="text-center" style="position: relative;margin-top: 155px;z-index: 1;">
+
+      <!--<select class="form-control" id="opt" [(ngModel)]="categoria" (change)="mudarCategoria()">
+                <option *ngFor="let categoriaS of categorias" [value]="categoriaS.id">
+                  {{ categoriaS.name }}
+                </option>
+              </select>-->
+      <div class="card" style="width: 18rem;">
+        <div class="card-header" style="cursor: pointer;" (click)="exibirCategorias()">
+          Selecione a Categoria <i #categoriaSeta class="fa fa-chevron-down pull-right"></i>
+        </div>
+
+        <ul [style.display]="isCategoriaAberta ? 'block' : 'none'" *ngFor="let categoria of categorias"
+          class="dontShow list-group list-group-flush">
+
+          <li id="{{categoria.id}}" [ngClass]="{'success':categoriaSelecionada == categoria.id}"
+            style="cursor: pointer;" (click)="mudarCategoria(categoria.id)" class="list-group-item text-left">
+            <img *ngIf="categoria.icon" style="margin-right: 10px;" [src]="getIconCategoria(categoria.id)" width="30px"
+              height="30px" />{{ categoria.name }}
+            <span *ngIf="carregando" class="pull-right"><i style='text-align: center;'
+                class="fa fa-spinner fa-spin"></i></span>
+          </li>
+
+        </ul>
+      </div>
+
+    </section>
+  </div>
+  <agm-map [latitude]="location.lat" [zoom]="location.zoom" [longitude]="location.lng" [styles]="styles">
+
+    <agm-marker *ngFor="let point of points" [iconUrl]="getIconCategoria(categoriaSelecionada)"
+      (markerClick)="selectMarker(point)" [latitude]="point.lat" [longitude]="point.lng">
+    </agm-marker>
+
+  </agm-map>
+</div>
+
+<ng-template #modalTemplate>
+  <div class="modal-header">
+    <div class="pull-left">
+      <h4 class="modal-title">{{ point.nome }}</h4>
+      <b>Categoria:</b> {{getNameCategoria(categoriaSelecionada)}}
+    </div>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <app-abecedario *ngIf="categoriaSelecionada == 1" [contents]="contents" [isAdmin]="false"
+      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
+    </app-abecedario>
+
+    <app-entrevista *ngIf="categoriaSelecionada == 2" [contents]="contents" [isAdmin]="false"
+      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
+    </app-entrevista>
+
+    <app-audio *ngIf="categoriaSelecionada == 3" [contents]="contents" [isAdmin]="false"
+      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
+    </app-audio>
+
+    <app-producao-academica *ngIf="categoriaSelecionada == 4" [contents]="contents" [isAdmin]="false"
+      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
+    </app-producao-academica>
+
+    <app-politicas *ngIf="categoriaSelecionada == 5" [contents]="contents" [isAdmin]="false"
+      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
+    </app-politicas>
+
+    <app-escolas *ngIf="categoriaSelecionada == 6" [contents]="contents" [isAdmin]="false"
+      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
+    </app-escolas>
+
+    <app-cursos *ngIf="categoriaSelecionada == 7" [contents]="contents" [isAdmin]="false"
+      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
+    </app-cursos>
+
+    <app-cineclubes *ngIf="categoriaSelecionada == 8" [contents]="contents" [isAdmin]="false"
+      (remover)="reciverDelete($event)" (alterar)="reciverAlter($event)">
+    </app-cineclubes>
+
+  </div>
+</ng-template>

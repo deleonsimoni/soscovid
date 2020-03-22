@@ -1,0 +1,9 @@
+db.points.find({
+    $and: [{
+        abecedarios: {
+          $gt: []
+        }, 
+        icAprovado: false
+}]
+      }).count()
+
