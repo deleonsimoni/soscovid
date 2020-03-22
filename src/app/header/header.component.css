@@ -1,0 +1,43 @@
+.bg-secondary {
+  background-color: #ed1c24 !important;
+}
+.paleta-de-cores {
+  color: #435f76;
+  color: #f4e9db;
+  color: #bdb8ac;
+  color: #dc8573;
+  color: #e16766;
+}
+.titulo {
+  font-family: cursive;
+}
+a {
+  color: white;
+  text-decoration: none;
+  background-color: transparent;
+  font-weight: 700;
+}
+a:hover {
+  color: #435f76;
+  text-decoration: none;
+  background-color: transparent;
+}
+[type="button"]:not(:disabled),
+[type="reset"]:not(:disabled),
+[type="submit"]:not(:disabled),
+button:not(:disabled) {
+  cursor: pointer !important;
+}
+.bg-primary {
+  background-color: transparent !important;
+  color: white !important;
+  font-size: 30px;
+}
+a.bg-primary:focus,
+a.bg-primary:hover,
+button.bg-primary:focus,
+button.bg-primary:hover {
+  background-color: transparent !important;
+  color: white !important;
+  font-size: 30px;
+}
