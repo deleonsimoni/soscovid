@@ -11,7 +11,7 @@ module.exports = router;
   session: false
 }))*/
 
-router.get('/', asyncHandler(getPoints));
+router.get('/getPointsNear/:lat/:lng', asyncHandler(getPoints));
 router.get('/categoriasName', asyncHandler(getNameCategorias));
 router.get('/helpUserId/:userId', asyncHandler(helpUserId));
 router.get('/getByProduto/:produto', asyncHandler(getByProduto));

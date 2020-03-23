@@ -96,21 +96,20 @@ export class MapasComponent implements OnInit {
 
   ngOnInit() {
 
-    //this.carregarPontos()
+    this.carregarPontos()
 
   }
 
   carregarPontos() {
     this.carregando = true;
     this.categorias = [];
-    this.http.get(`${this.baseUrl}/points`).subscribe((res: any) => {
+    this.http.get(`${this.baseUrl}/points/getPointsNear/` + this.lat + '/' + this.lng).subscribe((res: any) => {
       this.carregando = false;
-      this.points = res;
-
-      res.forEach(help => {
-        help.help.necessidades.forEach(necessidade => {
-          this.categorias.push(necessidade);
-        });
+      this.points = [];
+      res.forEach(element => {
+        if (element.help.length > 0) {
+          this.points.push(element);
+        }
       });
 
     }, err => {
@@ -250,8 +249,18 @@ export class MapasComponent implements OnInit {
   }
 
   getIconCategoria(categoria) {
-    //let icone = this.categorias.filter(element => element.produto == categoria)[0].icon;
-    return '../../assets/icones/' + 'abcedario.png';
+
+    switch (Number(categoria)) {
+      case 1:
+        return '../../assets/icones/' + 'ico-alimento.png';
+      case 2:
+        return '../../assets/icones/' + 'ico-higiene.png';
+      case 3:
+        return '../../assets/icones/' + 'ico-remedio.png';
+      default:
+        return '../../assets/icones/' + 'entrevista.png';
+    }
+
   }
 
   addHelpForm() {

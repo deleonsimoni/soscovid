@@ -15,8 +15,12 @@ module.exports = {
 
 async function getPoints(req) {
 
-  return await User.find({
-      'help.isValid': true
+  return await User.find({}, {
+      'help': {
+        $elemMatch: {
+          'isValid': 'true',
+        }
+      }
     })
     .sort({
       createAt: 1
