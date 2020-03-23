@@ -6,11 +6,15 @@ agm-map {
 
 }
 
-.success{
+.success {
+  background-color: rgb(146, 230, 226);
+}
+
+.success-produto {
   background-color: rgb(146, 230, 146);
 }
 
-.close{
+.close {
   color: white;
   text-shadow: none;
   opacity: 1;
@@ -27,16 +31,19 @@ agm-map {
   left: 10px;
   z-index: 99;
 }
-.modal-color{
-  background-color: #ed1c24;
+
+.modal-color {
+  background-color: #fe343ca6;
   color: white;
 }
-.sub-faltando{
+
+.sub-faltando {
   margin-bottom: 2px;
   text-transform: uppercase;
   font-weight: 700;
 }
-.btn-remove{
+
+.btn-remove {
   background-color: #8a0000;
   color: white;
   border-radius: .4em;

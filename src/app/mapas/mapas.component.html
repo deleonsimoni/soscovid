@@ -19,19 +19,18 @@
               <span *ngIf="carregando" class="pull-right"><i style='text-align: center;'
                   class="fa fa-spinner fa-spin"></i></span>
 
+              <div *ngIf="preCategoria.id == preCategoriaSelecionada">
+                <ul *ngFor="let categoria of categorias" class="dontShow list-group list-group-flush">
+                  <li id="{{categoria.produto}}" [ngClass]="{'success-produto':produtoSelecionado == categoria._id}"
+                    style="cursor: pointer;" (click)="mudarCategoria(categoria._id)" class="list-group-item text-left">
+                    <img *ngIf="preCategoria.icon" style="margin-right: 10px;" [src]="getIconCategoria(preCategoria.id)"
+                      width="30px" height="30px" />{{ categoria.produto }}
+                    <span *ngIf="carregando" class="pull-right"><i style='text-align: center;'
+                        class="fa fa-spinner fa-spin"></i></span>
+                  </li>
 
-              <ul *ngFor="let categoria of categorias" class="dontShow list-group list-group-flush">
-                <li id="{{categoria.produto}}" [ngClass]="{'success':produtoSelecionado == categoria.produto}"
-                  style="cursor: pointer;" (click)="mudarCategoria(categoria.produto)"
-                  class="list-group-item text-left">
-                  <img *ngIf="preCategoria.icon" style="margin-right: 10px;" [src]="getIconCategoria(preCategoria.id)"
-                    width="30px" height="30px" />{{ categoria.produto }}
-                  <span *ngIf="carregando" class="pull-right"><i style='text-align: center;'
-                      class="fa fa-spinner fa-spin"></i></span>
-                </li>
-
-              </ul>
-
+                </ul>
+              </div>
 
 
             </li>
@@ -51,8 +50,8 @@
   </div>
   <agm-map [latitude]="location.lat" [zoom]="location.zoom" [longitude]="location.lng" [styles]="styles">
 
-    <agm-marker *ngFor="let point of points" [iconUrl]="getIconCategoria(produtoSelecionado)"
-      (markerClick)="selectMarker(point._id)" [latitude]="point.help.lat" [longitude]="point.help.lng">
+    <agm-marker *ngFor="let point of points" [iconUrl]="getIconCategoria(preCategoriaSelecionada)"
+      (markerClick)="selectMarker(point._id)" [latitude]="point.help[0].lat" [longitude]="point.help[0].lng">
     </agm-marker>
 
   </agm-map>
@@ -69,7 +68,7 @@
 
     <div class="modal-body modal-color">
       <div class="mt-2" *ngFor="let necessidade of necessidades; let i = index;">
-        <button type="button" class="btn btn-danger" *ngIf="i > 0" (click)="removeHelpForm(i)">Remover</button>
+
         Suprimento
         <div class="">
           <select class="form-control mt-3" [(ngModel)]="necessidade.categoria">
@@ -81,16 +80,16 @@
           <input type="text" name="nome_{{i}}" class="form-control mt-3" id="abc613" placeholder="O que está faltando?"
             [(ngModel)]="necessidade.produto" />
         </div>
+        <button type="button" class="btn btn-danger" *ngIf="i > 0" style="border: solid 1px;"
+          (click)="removeHelpForm(i)">Remover</button>
 
       </div>
       <button type="button" class="btn btn-success mt-2" (click)="addHelpForm()">+ Suprimentos</button>
-
       <textarea [(ngModel)]="help.obs" placeholder="Conte mais do que tem passado..." class="form-control mt-2"
         id="exampleFormControlTextarea1" rows="3"></textarea>
 
       <div class="justify-content-center">
-        <button class="btn btn-primary mt-2" (click)="canHelp()">Pedir Ajuda</button>
-        <button type="button" class="btn btn-success mt-2 ml-2" (click)="addHelpForm()">+</button>
+        <button class="btn btn-primary mt-2" (click)="insertCallHelp()">Pedir Ajuda</button>
       </div>
     </div>
   </div>

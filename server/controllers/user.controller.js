@@ -9,6 +9,8 @@ const config = require('../config/config');
 module.exports = {
   insert,
   callHelp,
+  markHelp,
+
 }
 
 async function insert(user) {
@@ -36,13 +38,36 @@ async function callHelp(user, data) {
     }
   }
 
+  await User.findOneAndUpdate({
+    _id: user._id,
+    help: {
+      $exists: true,
+      $ne: []
+    }
+  }, {
+    $set: {
+      'help.$.isValid': false
+    }
+  })
+
   data.necessidades = necessidadesId;
   return await User.findByIdAndUpdate(user._id, {
-    $set: {
+    $push: {
       help: data
     }
   }, {
     new: true
   })
 
+}
+
+async function markHelp(user, helpId) {
+  return await User.findOneAndUpdate({
+    _id: user._id,
+    'help._id': helpId
+  }, {
+    $inc: {
+      'help.qtdHelp': 1
+    }
+  });
 }

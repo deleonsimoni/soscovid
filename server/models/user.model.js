@@ -53,7 +53,7 @@ const UserSchema = new mongoose.Schema({
     state: String
   },
 
-  help: {
+  help: [{
     lat: {
       type: String
     },
@@ -66,8 +66,23 @@ const UserSchema = new mongoose.Schema({
     }],
     obs: {
       type: String
-    }
-  },
+    },
+    isExpire: {
+      type: Boolean,
+      default: false
+    },
+    qtdHelp: {
+      type: Number
+    },
+    isValid: {
+      type: Boolean,
+      default: true
+    },
+    createdAt: {
+      type: Date,
+      dafault: Date.now
+    },
+  }],
   cellphone: {
     type: String
   },

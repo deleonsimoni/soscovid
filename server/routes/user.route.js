@@ -11,6 +11,7 @@ module.exports = router;
 
 router.post('/upload', [fileUpload()], asyncHandler(upload));
 router.get('/downloadFile', downloadFile);
+router.get('/markHelp/:idHelp', markHelp);
 
 router.post('/callHelp', passport.authenticate('jwt', {
   session: false
@@ -36,5 +37,10 @@ async function upload(req, res) {
 
 async function downloadFile(req, res) {
   let response = await userCtrl.downloadFileS3(req.query.fileName);
+  res.json(response);
+}
+
+async function markHelp(req, res) {
+  let response = await userCtrl.markHelp(req.user, req.params.idHelp);
   res.json(response);
 }

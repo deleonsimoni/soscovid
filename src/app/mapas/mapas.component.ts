@@ -42,7 +42,7 @@ export class MapasComponent implements OnInit {
   geocoder: any;
   galleries: any;
   gallerieSelect: any;
-  points: any = {};
+  points: any = [];
   point: any = {};
   help: any = {};
   userContent: any = {};
@@ -191,7 +191,18 @@ export class MapasComponent implements OnInit {
     this.produtoSelecionado = produto;
     this.http.get("api/points/getByProduto/" + this.produtoSelecionado).subscribe((res: any) => {
       this.carregando = false;
-      this.points = res;
+      this.points = [];
+      res.forEach(element => {
+        if (element.help.length > 0) {
+          this.points.push(element);
+        }
+      });
+
+
+      if (this.points.length == 0) {
+        this.toastr.error('Não há mais ninguém precisando deste produto', 'Poxa: ');
+      }
+
     }, err => {
       this.carregando = false;
       this.toastr.error('Servidor momentaneamente inoperante. Tente novamente mais tarde', 'Erro: ');
@@ -199,21 +210,23 @@ export class MapasComponent implements OnInit {
   }
 
   mudarPreCategoria(id) {
-    this.carregando = true;
-    this.preCategoriaSelecionada = id;
-    this.http.get("api/points/getProdutosFromCategoria/" + id).subscribe((res: any) => {
-      this.carregando = false;
-      this.points = res;
+    if (this.preCategoriaSelecionada != id) {
+      this.carregando = true;
+      this.preCategoriaSelecionada = id;
+      this.http.get("api/points/getProdutosFromCategoria/" + id).subscribe((res: any) => {
+        this.carregando = false;
+        this.categorias = res;
 
-      res.forEach(help => {
-        help.help.necessidades.forEach(necessidade => {
-          this.categorias.push(necessidade);
-        });
+        /*res.forEach(help => {
+          help.help.necessidades.forEach(necessidade => {
+            this.categorias.push(necessidade);
+          });
+        });*/
+      }, err => {
+        this.carregando = false;
+        this.toastr.error('Servidor momentaneamente inoperante. Tente novamente mais tarde', 'Erro: ');
       });
-    }, err => {
-      this.carregando = false;
-      this.toastr.error('Servidor momentaneamente inoperante. Tente novamente mais tarde', 'Erro: ');
-    });
+    }
   }
 
   getNameCategoria(id) {
