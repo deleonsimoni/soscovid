@@ -29,6 +29,9 @@ import { UploadComponent } from './upload/upload.component';
 import { environment } from '../environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EmbedVideo } from 'ngx-embed-video';
+import { ModalNormasComponent } from './modal/modal-normas/modal-normas.component';
+import { ModalConfirmationComponent } from './modal/modal-confirmation/modal-confirmation.component';
+import { ModalCriarContaComponent } from './modal/modal-criar-conta/modal-criar-conta.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { EmbedVideo } from 'ngx-embed-video';
     HomeComponent,
     FooterComponent,
     MapasComponent,
-    UploadComponent
+    UploadComponent,
+    ModalNormasComponent,
+    ModalConfirmationComponent,
+    ModalCriarContaComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +67,13 @@ import { EmbedVideo } from 'ngx-embed-video';
     ModalModule.forRoot(),
     NgbModule,
   ],
+  entryComponents: [
+
+    ModalNormasComponent,
+    ModalCriarContaComponent,
+    ModalConfirmationComponent,
+
+  ],
   providers: [
     BsModalRef,
     {
@@ -72,7 +85,6 @@ import { EmbedVideo } from 'ngx-embed-video';
       useClass: AuthHeaderInterceptor,
       multi: true,
     }],
-  entryComponents: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

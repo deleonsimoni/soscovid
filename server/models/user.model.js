@@ -54,11 +54,12 @@ const UserSchema = new mongoose.Schema({
   },
 
   help: [{
-    lat: {
-      type: String
-    },
-    lng: {
-      type: String
+    location: {
+      type: {
+        type: String,
+        default: "Point"
+      },
+      coordinates: []
     },
     necessidades: [{
       type: mongoose.Schema.Types.ObjectId,
@@ -71,9 +72,15 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false
     },
-    qtdHelp: {
-      type: Number
-    },
+    userHelp: [{
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      },
+      userEmail: {
+        type: String
+      }
+    }],
     isValid: {
       type: Boolean,
       default: true
@@ -89,7 +96,7 @@ const UserSchema = new mongoose.Schema({
   facebook: {
     type: String
   },
-  instagran: {
+  instagram: {
     type: String
   },
   profissao: {
@@ -101,5 +108,7 @@ const UserSchema = new mongoose.Schema({
   versionKey: false
 });
 
-
+UserSchema.index({
+  'help.location': "2dsphere"
+});
 module.exports = mongoose.model('User', UserSchema);

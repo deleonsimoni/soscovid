@@ -1,7 +1,9 @@
-body, html{
+body,
+html {
   width: 100%;
 }
-.home-container{
+
+.home-container {
   width: 100%;
   position: relative;
   margin-left: auto;
@@ -11,16 +13,24 @@ body, html{
   padding-top: 1em;
   padding-bottom: 1em;
 }
-.card-home{
+
+.card-home {
   border-radius: 10px;
   color: white;
 }
-.blue{
-  background-color: rgb(51, 142, 247,1);
+
+.blue {
+  background-color: rgb(51, 142, 247, 1);
 }
-.red{
-  background-color: #ed1c24 ;
+
+.red {
+  background-color: #ed1c24;
 }
-.img-card{
+
+.black {
+  background-color: black;
+}
+
+.img-card {
   border-radius: 10px 10px 0px 0px;
 }

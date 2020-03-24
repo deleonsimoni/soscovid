@@ -3,31 +3,15 @@ import { MapsAPILoader } from '@agm/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
+import { ModalCriarContaComponent } from '../modal/modal-criar-conta/modal-criar-conta.component';
 import { EmbedVideoService } from 'ngx-embed-video';
 import { ToastrService } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Injectable, Inject } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { ModalConfirmationComponent } from '../modal/modal-confirmation/modal-confirmation.component';
 
 declare var google: any;
-
-interface Marker {
-  lat: number;
-  lng: number;
-  label?: string;
-  draggable: boolean;
-}
-interface Location {
-  lat: number;
-  lng: number;
-  viewport?: Object;
-  zoom: number;
-  address_level_1?: string;
-  address_level_2?: string;
-  address_country?: string;
-  address_zip?: string;
-  address_state?: string;
-  marker?: Marker;
-}
 
 @Component({
   selector: 'app-mapas',
@@ -48,8 +32,8 @@ export class MapasComponent implements OnInit {
   userContent: any = {};
   necessidades: any = [{ produto: "" }];
   produtoSelecionado = 1;
-
-
+  token: any;
+  isUserHelp = false;
   public preCategorias = [
     { id: 1, name: 'Alimentos', icon: 'abcedario.png' },
     { id: 2, name: 'Higiene', icon: 'entrevista.png' },
@@ -58,21 +42,17 @@ export class MapasComponent implements OnInit {
   preCategoriaSelecionada;
 
   categoriaSelecionada: any;
-
+  selectedHelp: any;
   user: any;
   lat: any;
   lng: any;
+  zoom = 10;
+
   @ViewChild('categoriaSeta', { static: false }) categoriaSeta: ElementRef;
   @ViewChild('modalTemplate', { static: false }) modalTemplateRef: TemplateRef<any>;
   @ViewChild('callHelp', { static: false }) callHelpModal: TemplateRef<any>;
 
   public categorias: any = [];
-
-  location: Location = {
-    lat: this.lat,
-    lng: this.lng,
-    zoom: 3
-  };
 
   constructor(public mapsApiLoader: MapsAPILoader,
     private modalService: BsModalService,
@@ -82,25 +62,25 @@ export class MapasComponent implements OnInit {
     private embedService: EmbedVideoService,
     private _sanitizer: DomSanitizer,
     @Inject('BASE_API_URL') private baseUrl: string,
+    private dialog: MatDialog,
 
   ) {
     if (navigator) {
       navigator.geolocation.getCurrentPosition(pos => {
         this.lng = +pos.coords.longitude;
         this.lat = +pos.coords.latitude;
-        this.location.lng = this.lng;
-        this.location.lng = this.lat;
+        this.carregarPontos();
       });
     }
   }
 
   ngOnInit() {
-
-    this.carregarPontos()
-
+    this.token = this.authService.getToken();
+    this.user = this.authService.getDecodedAccessToken(this.token);
   }
 
   carregarPontos() {
+    console.log(this.lat, this.lng)
     this.carregando = true;
     this.categorias = [];
     this.http.get(`${this.baseUrl}/points/getPointsNear/` + this.lat + '/' + this.lng).subscribe((res: any) => {
@@ -119,33 +99,63 @@ export class MapasComponent implements OnInit {
   }
 
 
-  selectMarker(helpUserId) {
+  selectMarker(help) {
 
-    this.http.get("api/points/helpUserId/" + helpUserId).subscribe((res: any) => {
-      this.userContent = res;
+    this.selectedHelp = help;
 
-      this.modalRef = this.modalService.show(this.modalTemplateRef, Object.assign({}, { class: 'modal-edit' }));
+    if (!this.token) {
+      const dialogRef = this.dialog.open(ModalCriarContaComponent, {
+        data: {},
+      });
+    } else {
 
-    }, err => {
-      this.toastr.error('Servidor momentaneamente inoperante.', 'Erro: ');
-    });
+      this.necessidades = [];
 
+      if (help.help[0].userHelp.length && help.help[0].userHelp.some({ userId: this.user._id })) {
+        this.isUserHelp = true;
+      }
+
+      this.http.get("api/points/helpUserId/" + help._id).subscribe((res: any) => {
+        this.userContent = res;
+
+        this.modalRef = this.modalService.show(this.modalTemplateRef, Object.assign({}, { class: 'modal-edit' }));
+
+      }, err => {
+        this.toastr.error('Erro ao recuperar dados do usuario.', 'Erro: ');
+      });
+
+
+      help.help.forEach(element => {
+        element.necessidades.forEach(_id => {
+          this.http.get("api/points/getNecessidades/" + _id).subscribe((res: any) => {
+            this.necessidades.push(res);
+          }, err => {
+            this.toastr.error('Erro ao recuperar produtos.', 'Erro: ');
+          });
+        });
+      });
+
+    }
   }
 
   insertCallHelp() {
 
+    if (!this.token) {
+      const dialogRef = this.dialog.open(ModalCriarContaComponent, {
+        data: {},
+      });
+      return
+    }
+
     this.carregando = true;
 
     let help = {
-      lat: this.lat,
-      lng: this.lng,
+      location: {
+        coordinates: [this.lng, this.lat]
+      },
       necessidades: this.necessidades,
       obs: this.help.obs
     }
-
-    help.necessidades.forEach(element => {
-      element.icon = "abcedario.png"
-    });
 
     this.http.post(`${this.baseUrl}/user/callHelp`, help).subscribe((res: any) => {
       this.carregando = false;
@@ -158,7 +168,6 @@ export class MapasComponent implements OnInit {
         this.necessidades = [{ produto: "" }];
         this.help = {};
         this.carregarPontos();
-
       }
     }, err => {
 
@@ -168,7 +177,13 @@ export class MapasComponent implements OnInit {
   }
 
   modalSOS() {
-    this.modalRef = this.modalService.show(this.callHelpModal, Object.assign({}, { class: 'modal-edit' }));
+    if (!this.token || this.token == 'null') {
+      const dialogRef = this.dialog.open(ModalCriarContaComponent, {
+        data: {},
+      });
+    } else {
+      this.modalRef = this.modalService.show(this.callHelpModal, Object.assign({}, { class: 'modal-edit' }));
+    }
   }
 
   exibirCategorias() {
@@ -215,12 +230,10 @@ export class MapasComponent implements OnInit {
       this.http.get("api/points/getProdutosFromCategoria/" + id).subscribe((res: any) => {
         this.carregando = false;
         this.categorias = res;
+        if (!res || !res.length) {
+          this.points = [];
+        }
 
-        /*res.forEach(help => {
-          help.help.necessidades.forEach(necessidade => {
-            this.categorias.push(necessidade);
-          });
-        });*/
       }, err => {
         this.carregando = false;
         this.toastr.error('Servidor momentaneamente inoperante. Tente novamente mais tarde', 'Erro: ');
@@ -232,17 +245,6 @@ export class MapasComponent implements OnInit {
     return this.categorias.filter(element => element.id == id)[0].name;
   }
 
-  download(nameFile) {
-    const vm = this;
-    function sucessoDownload() {
-      vm.carregando = false;
-    }
-    function falhaDownload(err) {
-      this.toastr.error('Erro ao relizar download.', 'Erro: ');
-      vm.carregando = false;
-    }
-    this.carregando = true;
-  }
 
   getNomeCategoria(categoria) {
     return this.categorias.filter(element => element.id == categoria)[0].name;
@@ -263,14 +265,36 @@ export class MapasComponent implements OnInit {
 
   }
 
-  addHelpForm() {
-    this.necessidades.push({
-      nome: '',
-      link: ''
+  confirmHelp() {
+
+    const dialogRef = this.dialog.open(ModalConfirmationComponent, {
+      data: {
+        message: 'Sua colaboração é muito importante. Ao confirmar sua ajuda o sistema entenderá que essa pessoa terá colaboração e priorizará outras na busca do mapa, por favor confirme só estando realmente disposto a ajudar.',
+        buttonText: {
+          ok: 'Quero ajudar',
+          cancel: 'Cancelar'
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.callConfirmHelp();
+      }
     });
   }
-  removeHelpForm(i) {
-    this.necessidades.splice(i, 1);
+
+  callConfirmHelp() {
+    this.carregando = true;
+
+    this.http.post("api/points/confirmHelp/" + this.selectedHelp.help[0]._id, {}).subscribe((res: any) => {
+      this.carregando = false;
+      this.isUserHelp = true;
+
+    }, err => {
+      this.carregando = false;
+      this.toastr.error('Erro ao confirmar ajuda, por favor tente mais tarde', 'Erro: ');
+    });
   }
 
   styles = [

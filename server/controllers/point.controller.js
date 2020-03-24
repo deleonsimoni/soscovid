@@ -8,23 +8,51 @@ module.exports = {
   getNameCategorias,
   helpUserId,
   getByProduto,
-  getProdutosFromCategoria
+  getProdutosFromCategoria,
+  getNecessidades,
+  confirmHelp
 }
 
+async function confirmHelp(req) {
 
+  console.log(req.params.helpId)
+  console.log(req.user._id)
+  console.log(req.user.email)
+  return await User.findOneAndUpdate({
+    'help._id': req.params.helpId
+  }, {
+    $push: {
+      'userHelp': {
+        "userId": req.user._id,
+        "userEmail": req.user.email.toLowerCase()
+      }
+    }
+  }, {
+    new: true
+  }, function (err, doc) {
+    if (err) {
+      console.log("Erro ao incluir o id do usuario no help: ", err);
+    } else {
+      console.log("Sucesso ao vincular usuario ao help: ", err);
+    }
+  });
+}
 
 async function getPoints(req) {
 
-  return await User.find({}, {
-      'help': {
-        $elemMatch: {
-          'isValid': 'true',
+  console.log(req.params.lng, req.params.lat)
+  return await User.find({
+    'help.location': {
+      $near: {
+        $maxDistance: 100,
+        $geometry: {
+          type: "Point",
+          coordinates: [req.params.lng, req.params.lat]
         }
       }
-    })
-    .sort({
-      createAt: 1
-    }).select('_id help');
+    }
+  }).select('_id help');;
+
 }
 
 
@@ -52,6 +80,12 @@ async function getByProduto(produto) {
       }
     }
   });
+
+}
+
+async function getNecessidades(necessidadeId) {
+
+  return await Necessidades.findById(necessidadeId);
 
 }
 

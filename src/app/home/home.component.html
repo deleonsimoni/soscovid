@@ -50,23 +50,70 @@
 
   <!-- Cards -->
   <section style="margin-top: 1em">
+    <mat-card class="card-home black">
+      <mat-card-header>
+        <mat-card-title>
+          <h2 class="" style="text-align: center;color: red">S.O.S COVID-19</h2>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p style="color: white;">
+          Diante do crítico cenário mundial, desenvolvemos o SOS Covid-19 no intuito de proporcionar
+          uma maior visibilidade dos trabalhadores impactados pelo isolamento social. Esse App
+          possibilita o cadastro dos receptores juntamente com as suas necessidades para serem
+          supridas de forma voluntária e anônima dos Doadores. Os Doadores poderão doar alimentos,
+          medicamentos ou produtos de higiene conforme a necessidade dos Receptores. A forma de
+          entrega e recebimento das doações ficará sob responsabilidade dos envolvidos. As
+          informações do cadastro dos Receptores somente serão divulgadas caso o Doador queira fazer
+          a Doação criando um registro na plataforma. </p>
+
+
+      </mat-card-content>
+      <mat-card-actions>
+
+        <div class="justify-content-center row">
+
+          <a [routerLink]="['/']" fragment="doar" class=" mr-2">
+            <button class="btn btn-primary">
+              Doar
+            </button>
+          </a>
+
+          <a [routerLink]="['/']" fragment="receber" class="">
+            <button style="background-color: red; color: white;" class="btn  ">
+              Pedir ajuda
+            </button>
+          </a>
+
+        </div>
+      </mat-card-actions>
+
+    </mat-card>
+  </section>
+
+  <section id="doar" style="margin-top: 1em">
     <mat-card class="card-home blue">
       <img mat-card-image class="img-card" src="https://material.angular.io/assets/img/examples/shiba2.jpg"
         alt="Photo of a Shiba Inu">
       <mat-card-header>
         <mat-card-title>
-          <h2 class="">Doar</h2>
+          <h2 class="">Doadores</h2>
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <p>
-          Aqui vai a importancia de se doar aos necessitados.
-        </p>
+          Doadores são pessoas que fazem doações de alimentos, medicamentos ou produtos de
+          higiene sob demanda e de forma anônima aos trabalhadores que estão impedidos de trabalhar
+          em razão do Covid-19. </p>
+        <div class="justify-content-center">
+          <a [routerLink]="['/mapas']" fragment="doar"><button class="btn btn-primary mt-2">Clique para
+              Ajudar</button></a>
+        </div>
       </mat-card-content>
     </mat-card>
   </section>
 
-  <section style="margin-top: 1em">
+  <section id="receber" style="margin-top: 1em">
     <mat-card class="card-home red">
       <img mat-card-image class="img-card" src="https://material.angular.io/assets/img/examples/shiba2.jpg"
         alt="Photo of a Shiba Inu">
@@ -77,8 +124,14 @@
       </mat-card-header>
       <mat-card-content>
         <p>
-          Aqui vai pelo o que as pessoas mais necessitadas passam.
-        </p>
+          Receptores são pessoas trabalhadoras que estão impedidas de trabalhar e estão necessitando
+          de doação de alimentos, medicamentos ou produtos de higiene para a sua sobrevivência nesse
+          período do Covid-19. </p>
+        <div class="justify-content-center">
+          <a [routerLink]="['/mapas']" fragment="doar"><button style="background-color: red;"
+              class="btn btn-primary mt-2" (click)="irAoMapa()">Clique para
+              Solicitar Ajuda</button></a>
+        </div>
       </mat-card-content>
     </mat-card>
   </section>

@@ -10,9 +10,6 @@
 
       <div id="formlogin" *ngIf="isLogin">
         <!-- Icon -->
-        <div class="fadeIn first">
-          <img src="../../assets/img/logo.png" id="icon" alt="User Icon" />
-        </div>
 
         <!-- Login Form -->
         <form>
@@ -50,12 +47,6 @@
             placeholder="Senha">
           <input type="password" [(ngModel)]="register.password2" id="6" class="fadeIn third" name="word"
             placeholder="Repita Senha">
-
-          <input *ngIf="!carregando" (click)="registrar()" class="fadeIn fourth botaoEntrar" style="cursor:pointer"
-            value="Registrar">
-          <div *ngIf="carregando" class="row justify-content-center"><button class="btn-get-started"><i
-                class="fa fa-spinner fa-pulse"></i></button>
-          </div>
           <div class="form-check">
             <input *ngIf="!carregando" class="form-check-input" type="checkbox" name="id" id="termo" [value]="true"
               [(ngModel)]="register.icAcceptTerms">
@@ -63,9 +54,16 @@
                   class="fa fa-spinner fa-pulse"></i></button>
             </div>
             <label class="form-check-label" for="termo">
-              Li e concordo com o <a [routerLink]="">termo de uso</a>
+              Li e concordo com o <a (click)="openRules()">termo de uso</a>
             </label>
           </div>
+          <hr>
+          <input *ngIf="!carregando" (click)="registrar()" class="fadeIn fourth botaoEntrar" style="cursor:pointer"
+            value="Registrar">
+          <div *ngIf="carregando" class="row justify-content-center"><button class="btn-get-started"><i
+                class="fa fa-spinner fa-pulse"></i></button>
+          </div>
+
         </div>
       </div>
 
@@ -74,9 +72,11 @@
 
       <!-- Remind Passowrd -->
       <div id="formFooter">
-        <a *ngIf="!isLogin" style="cursor: pointer" class="underlineHover" (click)="isLogin = true">Já possui login</a>
+        <a *ngIf="!isLogin" style="cursor: pointer; color: white;" class="underlineHover" (click)="isLogin = true">Já
+          possui login</a>
 
-        <a *ngIf="isLogin" style="cursor: pointer" class="underlineHover" (click)="isLogin = false">Registrar</a><br>
+        <a *ngIf="isLogin" style="cursor: pointer;color: white;" class="underlineHover" (click)="isLogin = false">Criar
+          Conta</a><br>
         <!--<a *ngIf="isLogin" style="cursor: pointer" class="underlineHover">Esqueceu a Senha?</a>-->
       </div>
 

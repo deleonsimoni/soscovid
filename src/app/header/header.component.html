@@ -1,7 +1,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
   <div class="container">
-    <a style="font-size: large;" class="" href="#page-top" [routerLink]="['/']" fragment="intro-carrousel">
+    <a style="font-size: large;" class="" href="#page-top" [routerLink]="['/']">
       <img style="margin-top: 0px;" height="50px" src="../../assets/img/sos-white.png" />
     </a>
     <button aria-label="Toggle navigation"
@@ -17,7 +17,7 @@
             {{getShortName(user?.fullname)}}</a>
         </li>
         <li class="nav-item mx-0 mx-lg-1">
-          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/mapas">acesse</a>
+          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/mapas">colabore</a>
         </li>
         <!--<li class="nav-item mx-0 mx-lg-1">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" [routerLink]="['/']"
@@ -28,7 +28,7 @@
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/upload">upload</a>
         </li>
         <li *ngIf="!user" class="nav-item mx-0 mx-lg-1">
-          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/auth/login">colabore</a>
+          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/auth/login">acesse</a>
         </li>
         <li class="nav-item mx-0 mx-lg-1">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" [routerLink]="['/']"
