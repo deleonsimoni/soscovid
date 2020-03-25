@@ -4,6 +4,7 @@
 @import '~@angular/material/theming';
 @import '~dragula/dist/dragula.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~animate.css/animate.min';
 
 
 //@import '~src/assets/scss/landing-page.scss';
@@ -78,6 +79,10 @@ body {
     margin-top: 7em;
     border-radius: 8px;
   }
+}
+
+.cdk-overlay-container {
+  z-index: 9999 !important;
 }
 
 /* fim */

@@ -114,6 +114,8 @@
   }
 
   input[type=text],
+  input[type=email],
+  input[type=tel],
   input[type=password] {
     background-color: #f6f6f6;
     border: none;
@@ -136,17 +138,25 @@
   }
 
   input[type=text],
+  input[type=email],
+  input[type=tel],
   input[type=password]:focus {
     background-color: #fff;
     border-bottom: 2px solid #5fbae9;
   }
 
   input[type=text],
+  input[type=email],
+  input[type=tel],
   input[type=password]:placeholder {
     color: #cccccc;
   }
 
-
+  .optional {
+    border: 1.2px solid;
+    border-color: #61bae9;
+    margin: 6px;
+  }
 
   /* ANIMATIONS */
 

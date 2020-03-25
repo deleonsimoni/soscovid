@@ -23,7 +23,7 @@ import { AgmCoreModule } from '@agm/core';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { NgxMaskModule } from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask'
 import { ToastrModule } from 'ngx-toastr';
 import { UploadComponent } from './upload/upload.component';
 import { environment } from '../environments/environment';
@@ -60,6 +60,7 @@ import { ModalCriarContaComponent } from './modal/modal-criar-conta/modal-criar-
     BsDropdownModule.forRoot(),
     NgxMaskModule.forRoot(),
     EmbedVideo.forRoot(),
+    NgxMaskModule.forRoot(),
     ToastrModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDH7oOZdBbMgyLURojHNE9tcggTpnJTa3Q'

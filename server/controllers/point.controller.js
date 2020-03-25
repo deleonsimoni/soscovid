@@ -15,43 +15,40 @@ module.exports = {
 
 async function confirmHelp(req) {
 
-  console.log(req.params.helpId)
-  console.log(req.user._id)
-  console.log(req.user.email)
   return await User.findOneAndUpdate({
     'help._id': req.params.helpId
   }, {
     $push: {
-      'userHelp': {
-        "userId": req.user._id,
-        "userEmail": req.user.email.toLowerCase()
+      'help.$.userHelp': {
+        userId: req.user._id,
+        userEmail: req.user.email.toLowerCase()
       }
     }
   }, {
+    upsert: true,
     new: true
-  }, function (err, doc) {
-    if (err) {
-      console.log("Erro ao incluir o id do usuario no help: ", err);
-    } else {
-      console.log("Sucesso ao vincular usuario ao help: ", err);
-    }
   });
 }
 
 async function getPoints(req) {
 
-  console.log(req.params.lng, req.params.lat)
-  return await User.find({
+  let points = await User.find({
     'help.location': {
       $near: {
-        $maxDistance: 100,
+        $maxDistance: 1000,
         $geometry: {
           type: "Point",
           coordinates: [req.params.lng, req.params.lat]
         }
       }
     }
-  }).select('_id help');;
+  }).select('_id help');
+
+  for (var i = 0; i < points.length; i++) {
+    points[i].help = points[i].help.filter(element => element.isValid);
+  }
+
+  return points;
 
 }
 

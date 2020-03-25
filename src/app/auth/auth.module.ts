@@ -8,6 +8,7 @@ import { RegisterComponent } from './register/register.component';
 import { AuthService } from './auth.service';
 import { TokenStorage } from './token.storage';
 import { AuthRoutingModule } from './auth-routing.module';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -15,6 +16,8 @@ import { AuthRoutingModule } from './auth-routing.module';
     CommonModule,
     SharedModule,
     AuthRoutingModule,
+    NgxMaskModule.forRoot(),
+
   ],
   declarations: [
     LoginComponent,

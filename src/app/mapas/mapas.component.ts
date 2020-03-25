@@ -103,7 +103,7 @@ export class MapasComponent implements OnInit {
 
     this.selectedHelp = help;
 
-    if (!this.token) {
+    if (!this.token || this.token == 'null') {
       const dialogRef = this.dialog.open(ModalCriarContaComponent, {
         data: {},
       });
@@ -111,7 +111,7 @@ export class MapasComponent implements OnInit {
 
       this.necessidades = [];
 
-      if (help.help[0].userHelp.length && help.help[0].userHelp.some({ userId: this.user._id })) {
+      if (help.help[0].userHelp.length && help.help[0].userHelp.some(element => element.userId == this.user._id)) {
         this.isUserHelp = true;
       }
 
@@ -159,13 +159,13 @@ export class MapasComponent implements OnInit {
 
     this.http.post(`${this.baseUrl}/user/callHelp`, help).subscribe((res: any) => {
       this.carregando = false;
+      this.necessidades = [];
 
       if (res && res.temErro) {
         this.toastr.error(res.mensagem, 'Erro: ');
       } else {
         this.modalRef.hide();
         this.toastr.success(res.message, 'Sucesso');
-        this.necessidades = [{ produto: "" }];
         this.help = {};
         this.carregarPontos();
       }
@@ -177,6 +177,7 @@ export class MapasComponent implements OnInit {
   }
 
   modalSOS() {
+    this.necessidades = [{ produto: "" }];
     if (!this.token || this.token == 'null') {
       const dialogRef = this.dialog.open(ModalCriarContaComponent, {
         data: {},
@@ -269,7 +270,7 @@ export class MapasComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ModalConfirmationComponent, {
       data: {
-        message: 'Sua colaboração é muito importante. Ao confirmar sua ajuda o sistema entenderá que essa pessoa terá colaboração e priorizará outras na busca do mapa, por favor confirme só estando realmente disposto a ajudar.',
+        message: 'Sua colaboração é muito importante. Ao confirmar sua ajuda, o sistema entenderá que essa pessoa terá colaboração e priorizará outras na busca do mapa, por favor confirme só estando realmente disposto a ajudar.',
         buttonText: {
           ok: 'Quero ajudar',
           cancel: 'Cancelar'
@@ -295,6 +296,16 @@ export class MapasComponent implements OnInit {
       this.carregando = false;
       this.toastr.error('Erro ao confirmar ajuda, por favor tente mais tarde', 'Erro: ');
     });
+  }
+
+  addHelpForm() {
+    this.necessidades.push({
+      nome: '',
+      link: ''
+    });
+  }
+  removeHelpForm(i) {
+    this.necessidades.splice(i, 1);
   }
 
   styles = [

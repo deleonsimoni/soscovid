@@ -85,7 +85,7 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: true
     },
-    createdAt: {
+    dateCreate: {
       type: Date,
       dafault: Date.now
     },

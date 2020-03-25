@@ -13,7 +13,7 @@
 
         <!-- Login Form -->
         <form>
-          <input type="text" [(ngModel)]="email" id="login" class="fadeIn second" name="login" placeholder="Email">
+          <input type="email" [(ngModel)]="email" id="login" class="fadeIn second" name="login" placeholder="Email">
           <input type="password" [(ngModel)]="password" id="password" class="fadeIn third" name="login"
             placeholder="Senha">
           <input *ngIf="!carregando" (click)="login()" class="fadeIn fourth botaoEntrar" style="cursor:pointer"
@@ -30,19 +30,23 @@
 
         <!-- Login Form -->
         <div>
-          <input type="text" [(ngModel)]="register.fullname" id="1" class="fadeIn second" name="Nome Completo"
+          <input type="text" [(ngModel)]="register.fullname" id="1" class="fadeIn second" name="Nome ou Apelido"
             placeholder="Nome Completo">
-          <input type="text" [(ngModel)]="register.email" id="2" class="fadeIn second" name="Email" placeholder="Email">
-          <input type="text" [(ngModel)]="register.email2" id="3" class="fadeIn second" name="Repita Email"
+          <input type="email" [(ngModel)]="register.email" id="2" class="fadeIn second" name="Email"
+            placeholder="Email">
+          <input type="email" [(ngModel)]="register.email2" id="3" class="fadeIn second" name="Repita Email"
             placeholder="Repita o Email">
-          <input type="text" [(ngModel)]="register.cellphone" id="6" class="fadeIn third" name="word"
-            placeholder="Celular">
-          <input type="text" [(ngModel)]="register.profissao" id="6" class="fadeIn third" name="word"
-            placeholder="Profissão">
-          <input type="text" [(ngModel)]="register.facebook" id="6" class="fadeIn third" name="word"
-            placeholder="Seu Facebook">
-          <input type="text" [(ngModel)]="register.instagram" id="6" class="fadeIn third" name="word"
-            placeholder="Seu Instagram">
+          <input type="tel" [(ngModel)]="register.cellphone" mask="(00) 00000-0000" id="6" class="fadeIn third"
+            name="word" placeholder="Celular">
+          <div class="optional">
+            <span>Dados Opcionais</span>
+            <input type="text" [(ngModel)]="register.profissao" id="6" class="fadeIn third" name="word"
+              placeholder="Profissão">
+            <input type="text" [(ngModel)]="register.facebook" id="6" class="fadeIn third" name="word"
+              placeholder="Facebook">
+            <input type="text" [(ngModel)]="register.instagram" id="6" class="fadeIn third" name="word"
+              placeholder="@intagram">
+          </div>
           <input type="password" [(ngModel)]="register.password" id="5" class="fadeIn third" name="pass"
             placeholder="Senha">
           <input type="password" [(ngModel)]="register.password2" id="6" class="fadeIn third" name="word"

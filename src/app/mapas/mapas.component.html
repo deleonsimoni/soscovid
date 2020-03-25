@@ -48,7 +48,8 @@
 
     </section>
   </div>
-  <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng" [styles]="styles">
+  <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng" [styles]="styles" [streetViewControl]="false"
+    [zoomControl]="false">
 
     <agm-marker *ngFor="let point of points" [iconUrl]="getIconCategoria(preCategoriaSelecionada)"
       (markerClick)="selectMarker(point)" [latitude]="point.help[0].location.coordinates[1]"
@@ -99,7 +100,9 @@
 <ng-template #modalTemplate>
   <div class="modal-header">
     <div class="pull-left">
-      <h4 class="modal-title">Somar forças</h4>
+      <h4 class="modal-title">Somar forças
+        <img src="../../assets/img/somarForças.png" height="40px" class="animated pulse infinite">
+      </h4>
       <!--<b>Categoria:</b> {{getNameCategoria(produtoSelecionado)}}-->
     </div>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -124,16 +127,6 @@
           <mat-card-content>
             <div class="row">
 
-              <div *ngIf="!isUserHelp">
-                Preservando a privacidade do usuário, para conceder ajuda e obter informações de quem está precisando
-                você precisa clicar no botão de confirmar ajuda.
-                <br>
-                <div class="justify-content-center">
-                  <button class="btn btn-primary mt-2" (click)="confirmHelp(help._id)">Confirmar ajuda</button>
-                </div>
-
-              </div>
-
               <div *ngIf="isUserHelp">
                 <div *ngIf="userContent.facebook" class="col-12">
 
@@ -155,22 +148,31 @@
 
               <!-- Informações -->
               <div class="col-lg-5">
-                Observação: {{ userContent.help[0].obs }}
+                Motivação: {{ userContent.help[0].obs }}
               </div>
 
               <!-- fim infs -->
 
               <div class="col-sm-12">
-                <mat-card-header>
-                  <h3 class="mt-3 mt-sm-0">Produtos de necessidade</h3>
-                </mat-card-header>
+                <h4 class="mt-3 mt-sm-0">Produtos de necessidade</h4>
 
-                <mat-card-header class="d-flex flex-row flex-wrap">
-                  <div *ngFor="let necessidade of necessidades; let i = index;" class="m-2">
-                    {{ necessidade.produto }}
-                  </div>
-                </mat-card-header>
+                <ul *ngFor="let necessidade of necessidades; let i = index;">
+                  <li>{{ necessidade.produto }}</li>
+                </ul>
+
               </div>
+              <hr>
+
+              <div *ngIf="!isUserHelp">
+                <p>Preservando a privacidade do usuário, para conceder ajuda e obter informações de quem está precisando
+                  você precisa clicar no botão de confirmar ajuda.</p>
+                <div class="text-center">
+                  <button class="btn btn-primary mt-2" (click)="confirmHelp(help._id)">Confirmar ajuda</button>
+                </div>
+
+              </div>
+
+
             </div>
           </mat-card-content>
 
