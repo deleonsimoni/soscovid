@@ -26,6 +26,10 @@ export class HomeComponent implements OnInit {
       }
     });
 
+    if (navigator) {
+      navigator.geolocation.getCurrentPosition(pos => {
+      });
+    }
   }
 
 

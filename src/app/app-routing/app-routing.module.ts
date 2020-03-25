@@ -4,6 +4,7 @@ import { AuthGuard } from '../auth/auth-guard.service';
 import { HomeComponent } from '../home/home.component';
 import { MapasComponent } from '../mapas/mapas.component';
 import { UploadComponent } from '../upload/upload.component';
+import { AppComponent } from '../app.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'mapas',
     component: MapasComponent
+  },
+  {
+    path: 'app',
+    component: AppComponent
   },
   {
     path: 'upload',

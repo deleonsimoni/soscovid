@@ -90,7 +90,7 @@ export class AppComponent implements OnInit {
   }
   logout(): void {
     this.authService.signOut();
-    this.navigate('');
+    window.open('file:///android_asset/www/index.html', "_system");
   }
 
   navigate(link): void {

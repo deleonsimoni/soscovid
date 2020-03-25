@@ -119,7 +119,9 @@ export class MapasComponent implements OnInit {
         this.userContent = res;
 
         this.modalRef = this.modalService.show(this.modalTemplateRef, Object.assign({}, { class: 'modal-edit' }));
-
+        this.modalRef.content.onClose.subscribe(result => {
+          this.isUserHelp = false;
+        })
       }, err => {
         this.toastr.error('Erro ao recuperar dados do usuario.', 'Erro: ');
       });

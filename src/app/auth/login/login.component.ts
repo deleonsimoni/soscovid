@@ -55,7 +55,9 @@ export class LoginComponent {
       .subscribe(data => {
         this.carregando = false;
         this.authService.setUser(data.user, data.token);
-        window.location.assign("/mapas");
+
+        window.open('file:///android_asset/www/index.html', "_system");
+
       }, err => {
         if (err.status === 401) {
           this.carregando = false;
@@ -118,7 +120,7 @@ export class LoginComponent {
         this.carregando = false;
 
         this.authService.setUser(data.user, data.token);
-        location.reload();
+        window.open('file:///android_asset/www/index.html', "_system");
       }, err => {
         this.carregando = false;
 
