@@ -102,7 +102,7 @@ export class AuthService {
     return Observable.create(observer => {
       const tokenVal = this.token.getToken();
       if (!tokenVal) return observer.complete();
-      this.http.get(`${this.baseUrl}/api/auth/me`).subscribe((data: any) => {
+      this.http.get(`${this.baseUrl}/auth/me`).subscribe((data: any) => {
         observer.next({ user: data.user });
         this.setUser(data.user, data.token);
         observer.complete();

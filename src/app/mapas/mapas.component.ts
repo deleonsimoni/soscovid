@@ -115,7 +115,7 @@ export class MapasComponent implements OnInit {
         this.isUserHelp = true;
       }
 
-      this.http.get("api/points/helpUserId/" + help._id).subscribe((res: any) => {
+      this.http.get(`${this.baseUrl}/points/helpUserId/` + help._id).subscribe((res: any) => {
         this.userContent = res;
 
         this.modalRef = this.modalService.show(this.modalTemplateRef, Object.assign({}, { class: 'modal-edit' }));
@@ -127,7 +127,7 @@ export class MapasComponent implements OnInit {
 
       help.help.forEach(element => {
         element.necessidades.forEach(_id => {
-          this.http.get("api/points/getNecessidades/" + _id).subscribe((res: any) => {
+          this.http.get(`${this.baseUrl}/points/getNecessidades/` + _id).subscribe((res: any) => {
             this.necessidades.push(res);
           }, err => {
             this.toastr.error('Erro ao recuperar produtos.', 'Erro: ');
@@ -204,7 +204,7 @@ export class MapasComponent implements OnInit {
   mudarCategoria(produto) {
     this.carregando = true;
     this.produtoSelecionado = produto;
-    this.http.get("api/points/getByProduto/" + this.produtoSelecionado).subscribe((res: any) => {
+    this.http.get(`${this.baseUrl}/points/getByProduto/` + this.produtoSelecionado).subscribe((res: any) => {
       this.carregando = false;
       this.points = [];
       res.forEach(element => {
@@ -228,7 +228,7 @@ export class MapasComponent implements OnInit {
     if (this.preCategoriaSelecionada != id) {
       this.carregando = true;
       this.preCategoriaSelecionada = id;
-      this.http.get("api/points/getProdutosFromCategoria/" + id).subscribe((res: any) => {
+      this.http.get(`${this.baseUrl}/points/getProdutosFromCategoria/` + id).subscribe((res: any) => {
         this.carregando = false;
         this.categorias = res;
         if (!res || !res.length) {
@@ -255,13 +255,13 @@ export class MapasComponent implements OnInit {
 
     switch (Number(categoria)) {
       case 1:
-        return '../../assets/icones/' + 'ico-alimento.png';
+        return './assets/icones/' + 'ico-alimento.png';
       case 2:
-        return '../../assets/icones/' + 'ico-higiene.png';
+        return './assets/icones/' + 'ico-higiene.png';
       case 3:
-        return '../../assets/icones/' + 'ico-remedio.png';
+        return './assets/icones/' + 'ico-remedio.png';
       default:
-        return '../../assets/icones/' + 'entrevista.png';
+        return './assets/icones/' + 'entrevista.png';
     }
 
   }
@@ -288,7 +288,7 @@ export class MapasComponent implements OnInit {
   callConfirmHelp() {
     this.carregando = true;
 
-    this.http.post("api/points/confirmHelp/" + this.selectedHelp.help[0]._id, {}).subscribe((res: any) => {
+    this.http.post(`${this.baseUrl}/points/confirmHelp/` + this.selectedHelp.help[0]._id, {}).subscribe((res: any) => {
       this.carregando = false;
       this.isUserHelp = true;
 

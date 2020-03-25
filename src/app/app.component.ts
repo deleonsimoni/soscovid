@@ -65,25 +65,25 @@ export class AppComponent implements OnInit {
 
     switch (Math.floor((Math.random() * 6) + 1)) {
       case 1:
-        this.imageSplash = "../assets/img/corona-red.png"
+        this.imageSplash = "./assets/img/corona-red.png"
         break;
       case 2:
-        this.imageSplash = "../assets/img/corona-white.png"
+        this.imageSplash = "./assets/img/corona-white.png"
         break;
       case 3:
-        this.imageSplash = "../assets/img/name-red.png"
+        this.imageSplash = "./assets/img/name-red.png"
         break;
       case 4:
-        this.imageSplash = "../assets/img/name-white.png"
+        this.imageSplash = "./assets/img/name-white.png"
         break;
       case 5:
-        this.imageSplash = "../assets/img/sos-red.png"
+        this.imageSplash = "./assets/img/sos-red.png"
         break;
       case 6:
-        this.imageSplash = "../assets/img/sos-white.png"
+        this.imageSplash = "./assets/img/sos-white.png"
         break;
       default:
-        this.imageSplash = "../assets/img/corona-red.png"
+        this.imageSplash = "./assets/img/corona-red.png"
         break;
     }
 

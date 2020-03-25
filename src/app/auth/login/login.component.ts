@@ -118,7 +118,7 @@ export class LoginComponent {
         this.carregando = false;
 
         this.authService.setUser(data.user, data.token);
-        window.location.assign("/mapas");
+        location.reload();
       }, err => {
         this.carregando = false;
 
