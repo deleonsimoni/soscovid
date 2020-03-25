@@ -2,15 +2,15 @@
 <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
   <div class="container">
     <a style="font-size: large;" class="" href="#page-top" [routerLink]="['/']">
-      <img style="margin-top: 0px;" height="50px" src="./assets/img/sos-white.png" /> VERSAO TESTE
+      <img style="margin-top: 0px;" height="50px" src="./assets/img/sos-white.png" /> VERSAO {{versao}}
     </a>
-    <button aria-label="Toggle navigation"
+    <button *ngIf="atualizado" aria-label="Toggle navigation"
       class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button"
       data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive">
 
       <i class="fa fa-bars"></i>
     </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
+    <div *ngIf="atualizado" class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li *ngIf="user" class="nav-item mx-0 mx-lg-1">
           <a style="color:white" class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">Olá,

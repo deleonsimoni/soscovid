@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  //host: 'http://localhost:8080/api'
-  host: 'http://18.229.149.159/api'
+  host: 'http://localhost:8080/api'
+  //host: 'http://18.229.149.159/api'
 };

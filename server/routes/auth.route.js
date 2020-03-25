@@ -27,9 +27,21 @@ router.get('/:categoriaId', passport.authenticate('jwt', {
   session: false
 }), asyncHandler(getPointsByCategoriaAdmin));
 
+router.get('/chkVsk/:version', asyncHandler(chkVsk));
 
 
+async function chkVsk(req, res) {
+  if (req.params.version == "0.0.5b") {
+    res.json({
+      atualizado: 1
+    });
+  } else {
+    res.json({
+      atualizado: 0
+    });
+  }
 
+}
 
 async function refresh(req, res) {
   res.json({

@@ -10,6 +10,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Injectable, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ModalConfirmationComponent } from '../modal/modal-confirmation/modal-confirmation.component';
+import { ModalWaitGpsComponent } from '../modal/modal-wait-gps/modal-wait-gps.component';
+
+import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 declare var google: any;
 
@@ -46,14 +49,13 @@ export class MapasComponent implements OnInit {
   user: any;
   lat: any;
   lng: any;
-  zoom = 10;
-
+  zoom = 12;
   @ViewChild('categoriaSeta', { static: false }) categoriaSeta: ElementRef;
   @ViewChild('modalTemplate', { static: false }) modalTemplateRef: TemplateRef<any>;
   @ViewChild('callHelp', { static: false }) callHelpModal: TemplateRef<any>;
 
   public categorias: any = [];
-
+  modalWaitGPS: any;
   constructor(public mapsApiLoader: MapsAPILoader,
     private modalService: BsModalService,
     private authService: AuthService,
@@ -65,6 +67,7 @@ export class MapasComponent implements OnInit {
     private dialog: MatDialog,
 
   ) {
+
     if (navigator) {
       navigator.geolocation.getCurrentPosition(pos => {
         this.lng = +pos.coords.longitude;
@@ -77,6 +80,8 @@ export class MapasComponent implements OnInit {
   ngOnInit() {
     this.token = this.authService.getToken();
     this.user = this.authService.getDecodedAccessToken(this.token);
+
+
   }
 
   carregarPontos() {
@@ -149,6 +154,7 @@ export class MapasComponent implements OnInit {
       return
     }
 
+
     this.carregando = true;
 
     let help = {
@@ -156,7 +162,7 @@ export class MapasComponent implements OnInit {
         coordinates: [this.lng, this.lat]
       },
       necessidades: this.necessidades,
-      obs: this.help.obs
+      obs: this.help.obs ? this.help.obs : ''
     }
 
     this.http.post(`${this.baseUrl}/user/callHelp`, help).subscribe((res: any) => {

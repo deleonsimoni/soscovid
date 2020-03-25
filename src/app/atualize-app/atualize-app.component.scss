@@ -1,0 +1,36 @@
+body,
+html {
+  width: 100%;
+}
+
+.home-container {
+  width: 100%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  margin-top: 3em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.card-home {
+  border-radius: 10px;
+  color: white;
+}
+
+.blue {
+  background-color: rgb(51, 142, 247, 1);
+}
+
+.red {
+  background-color: #ed1c24;
+}
+
+.black {
+  background-color: black;
+}
+
+.img-card {
+  border-radius: 10px 10px 0px 0px;
+}

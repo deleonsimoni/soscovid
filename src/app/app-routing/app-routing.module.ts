@@ -5,6 +5,7 @@ import { HomeComponent } from '../home/home.component';
 import { MapasComponent } from '../mapas/mapas.component';
 import { UploadComponent } from '../upload/upload.component';
 import { AppComponent } from '../app.component';
+import { AtualizeAppComponent } from '../atualize-app/atualize-app.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'app',
     component: AppComponent
+  },
+  {
+    path: 'atualize',
+    component: AtualizeAppComponent
   },
   {
     path: 'upload',

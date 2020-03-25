@@ -43,6 +43,13 @@ export class AppComponent implements OnInit {
       this.user = data.user;
     });*/
 
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+      document.addEventListener("backbutton", function (e) {
+        e.preventDefault();
+      }, false);
+    }
+
     setTimeout(() => {    //<<<---    using ()=> syntax
       const splashScreen: HTMLElement = document.getElementById('custom-overlay');
       const menu: HTMLElement = document.getElementById('menu');

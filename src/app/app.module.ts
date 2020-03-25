@@ -32,6 +32,8 @@ import { EmbedVideo } from 'ngx-embed-video';
 import { ModalNormasComponent } from './modal/modal-normas/modal-normas.component';
 import { ModalConfirmationComponent } from './modal/modal-confirmation/modal-confirmation.component';
 import { ModalCriarContaComponent } from './modal/modal-criar-conta/modal-criar-conta.component';
+import { AtualizeAppComponent } from './atualize-app/atualize-app.component';
+import { ModalWaitGpsComponent } from './modal/modal-wait-gps/modal-wait-gps.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { ModalCriarContaComponent } from './modal/modal-criar-conta/modal-criar-
     UploadComponent,
     ModalNormasComponent,
     ModalConfirmationComponent,
-    ModalCriarContaComponent
+    ModalCriarContaComponent,
+    AtualizeAppComponent,
+    ModalWaitGpsComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +77,7 @@ import { ModalCriarContaComponent } from './modal/modal-criar-conta/modal-criar-
     ModalNormasComponent,
     ModalCriarContaComponent,
     ModalConfirmationComponent,
-
+    ModalWaitGpsComponent,
   ],
   providers: [
     BsModalRef,
