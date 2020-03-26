@@ -4,7 +4,7 @@
     <section class="text-center" style="position: relative;margin-top: 155px;z-index: 1;">
       <div class="card" style="width: 18rem;">
         <div class="card-header" style="cursor: pointer;" (click)="exibirCategorias()">
-          Em que pode ajudar? <i #categoriaSeta class="fa fa-chevron-down pull-right"></i>
+          Posso ajudar? <i #categoriaSeta class="fa fa-chevron-down pull-right"></i>
         </div>
         <div id="categoriaSelect" style="max-height: 200px; overflow-y: auto;">
 
@@ -49,7 +49,7 @@
     </section>
   </div>
   <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng" [styles]="styles" [streetViewControl]="false"
-    [zoomControl]="false">
+    [clickableIcons]="false" [showDefaultInfoWindow]="false" [zoomControl]="false">
 
     <agm-marker *ngFor="let point of points" [iconUrl]="getIconCategoria(preCategoriaSelecionada)"
       (markerClick)="selectMarker(point)" [latitude]="point.help[0].location.coordinates[1]"

@@ -33,6 +33,7 @@ async function confirmHelp(req) {
 async function getPoints(req) {
 
   let points = await User.find({
+    
     'help.location': {
       $near: {
         $maxDistance: 1000,
@@ -93,5 +94,6 @@ async function getProdutosFromCategoria(categoria) {
     })
     .sort({
       produto: 1
-    });
+   });
 }
+
