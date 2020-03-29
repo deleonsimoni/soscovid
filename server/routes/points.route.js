@@ -15,6 +15,9 @@ router.get('/getPointsNear/:lat/:lng', asyncHandler(getPoints));
 router.get('/categoriasName', asyncHandler(getNameCategorias));
 router.get('/helpUserId/:userId', asyncHandler(helpUserId));
 router.get('/getByProduto/:produto', asyncHandler(getByProduto));
+router.get('/getPointsByPreCategoria/:categoria/:lat/:lng', asyncHandler(getPointsByPreCategoria));
+
+
 router.get('/getProdutosFromCategoria/:idCategoria', asyncHandler(getProdutosFromCategoria));
 router.get('/getNecessidades/:necessidadeId', asyncHandler(getNecessidades));
 
@@ -41,6 +44,11 @@ async function getNameCategorias(req, res) {
 
 async function getByProduto(req, res) {
   let user = await pointsCtrl.getByProduto(req.params.produto);
+  res.json(user);
+}
+
+async function getPointsByPreCategoria(req, res) {
+  let user = await pointsCtrl.getPointsByPreCategoria(req);
   res.json(user);
 }
 

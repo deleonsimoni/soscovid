@@ -47,20 +47,21 @@
             <input type="text" [(ngModel)]="register.facebook" id="6" class="fadeIn third" name="word"
               placeholder="Facebook">
             <input type="text" [(ngModel)]="register.instagram" id="6" class="fadeIn third" name="word"
-              placeholder="@intagram">
+              placeholder="@instagram">
           </div>
           <input type="password" [(ngModel)]="register.password" id="5" class="fadeIn third" name="pass"
             placeholder="Senha">
           <input type="password" [(ngModel)]="register.password2" id="6" class="fadeIn third" name="word"
             placeholder="Repita Senha">
           <div class="form-check">
-            <input *ngIf="!carregando" class="form-check-input" type="checkbox" name="id" id="termo" [value]="true"
-              [(ngModel)]="register.icAcceptTerms">
+
             <div *ngIf="carregando" class="row justify-content-center"><button class="btn-get-started"><i
                   class="fa fa-spinner fa-pulse"></i></button>
             </div>
             <label class="form-check-label" for="termo">
-              Li e concordo com o <a (click)="openRules()">termo de uso</a>
+              <input *ngIf="!carregando" class="form-check-input" type="checkbox" name="id" id="termo" [value]="true"
+                [(ngModel)]="register.icAcceptTerms">
+              Li e concordo com o <a (click)="openRules()"><u>politica de privacidade e termo de uso</u></a>
             </label>
           </div>
           <hr>

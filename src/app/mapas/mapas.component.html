@@ -13,7 +13,8 @@
             class="dontShow list-group list-group-flush">
 
             <li id="{{preCategoria.id}}" [ngClass]="{'success':preCategoriaSelecionada == preCategoria.id}"
-              style="cursor: pointer;" (click)="mudarPreCategoria(preCategoria.id)" class="list-group-item text-left">
+              style="cursor: pointer;" (click)="getPointsByPreCategoria(preCategoria.id)"
+              class="list-group-item text-left">
               <img *ngIf="preCategoria.icon" style="margin-right: 10px;" [src]="getIconCategoria(preCategoria.id)"
                 width="30px" height="30px" />{{ preCategoria.name }}
               <span *ngIf="carregando" class="pull-right"><i style='text-align: center;'
@@ -52,8 +53,9 @@
     [clickableIcons]="false" [showDefaultInfoWindow]="false" [zoomControl]="false">
 
     <agm-marker *ngFor="let point of points" [iconUrl]="getIconCategoria(preCategoriaSelecionada)"
-      (markerClick)="selectMarker(point)" [latitude]="point.help[0].location.coordinates[1]"
-      [longitude]="point.help[0].location.coordinates[0]">
+      (markerClick)="selectMarker(point)"
+      [latitude]="point.help.location ? point.help.location.coordinates[1] : point.help[0].location.coordinates[1]"
+      [longitude]="point.help.location ? point.help.location.coordinates[0] : point.help[0].location.coordinates[0]">
     </agm-marker>
 
   </agm-map>
@@ -167,7 +169,7 @@
                 <p>Preservando a privacidade do usuário, para conceder ajuda e obter informações de quem está precisando
                   você precisa clicar no botão de confirmar ajuda.</p>
                 <div class="text-center">
-                  <button class="btn btn-primary mt-2" (click)="confirmHelp(help._id)">Confirmar ajuda</button>
+                  <button class="btn btn-primary mt-2" (click)="confirmHelp()">Confirmar ajuda</button>
                 </div>
 
               </div>

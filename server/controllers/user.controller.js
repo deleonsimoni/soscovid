@@ -24,8 +24,12 @@ async function callHelp(user, data) {
 
   let necessidadesId = [];
   let necessidadeAux = '';
+  let categories = [];
 
   for (var i = 0; i < data.necessidades.length; i++) {
+
+    categories.push(data.necessidades[i].categoria);
+
     necessidadeAux = await Necessidades.find({
       produto: data.necessidades[i].produto.toLowerCase()
     }).select('_id');
@@ -37,20 +41,30 @@ async function callHelp(user, data) {
       necessidadesId.push(necessidadeAux);
     }
   }
-
-  await User.findOneAndUpdate({
-    _id: user._id,
-    help: {
-      $exists: true,
-      $ne: []
-    }
-  }, {
-    $set: {
-      'help.$.isValid': false
-    }
-  })
+  /*
+    await User.findOneAndUpdate({
+      _id: user._id,
+      help: {
+        $exists: true,
+        $ne: []
+      }
+    }, {
+      $set: {
+        'help.$.isValid': false
+      }
+    }, {
+      new: true
+    })
+  */
+  await User.findById(user._id).then(function (doc) {
+    doc.help.forEach(function (help) {
+      help.isValid = false;
+    });
+    doc.save(doc);
+  });
 
   data.necessidades = necessidadesId;
+  data.categories = categories;
   return await User.findByIdAndUpdate(user._id, {
     $push: {
       help: data

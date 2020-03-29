@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-modal-normas',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalNormasComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public dialogRef: MatDialogRef<ModalNormasComponent>,
+  ) { }
 
   ngOnInit() {
+  }
+
+  public close(): void {
+    this.dialogRef.close();
   }
 
 }

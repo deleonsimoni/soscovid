@@ -40,7 +40,11 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.authService.signOut();
-    window.open('file:///android_asset/www/index.html', "_system");
+    if (document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1) {
+      window.open('file:///android_asset/www/index.html', "_system");
+    } else {
+      window.location.assign("/");
+    }
   }
 
   getShortName(fullName) {

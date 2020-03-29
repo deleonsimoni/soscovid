@@ -56,7 +56,11 @@ export class LoginComponent {
         this.carregando = false;
         this.authService.setUser(data.user, data.token);
 
-        window.open('file:///android_asset/www/index.html', "_system");
+        if (document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1) {
+          window.open('file:///android_asset/www/index.html', "_system");
+        } else {
+          window.location.assign("/mapas");
+        }
 
       }, err => {
         if (err.status === 401) {
@@ -120,7 +124,12 @@ export class LoginComponent {
         this.carregando = false;
 
         this.authService.setUser(data.user, data.token);
-        window.open('file:///android_asset/www/index.html', "_system");
+        if (document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1) {
+          window.open('file:///android_asset/www/index.html', "_system");
+        } else {
+          window.location.assign("/mapas");
+        }
+
       }, err => {
         this.carregando = false;
 

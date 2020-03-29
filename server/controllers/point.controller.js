@@ -10,7 +10,8 @@ module.exports = {
   getByProduto,
   getProdutosFromCategoria,
   getNecessidades,
-  confirmHelp
+  confirmHelp,
+  getPointsByPreCategoria
 }
 
 async function confirmHelp(req) {
@@ -33,10 +34,9 @@ async function confirmHelp(req) {
 async function getPoints(req) {
 
   let points = await User.find({
-    
     'help.location': {
       $near: {
-        $maxDistance: 1000,
+        $maxDistance: 5000,
         $geometry: {
           type: "Point",
           coordinates: [req.params.lng, req.params.lat]
@@ -50,6 +50,39 @@ async function getPoints(req) {
   }
 
   return points;
+
+}
+
+async function getPointsByPreCategoria(req) {
+
+  let pointsResponse = [];
+
+  let points = await User.find({
+    'help.location': {
+      $near: {
+        $maxDistance: 5000,
+        $geometry: {
+          type: "Point",
+          coordinates: [req.params.lng, req.params.lat]
+        }
+      }
+    }
+  }).select('_id help');
+
+  for (var i = 0; i < points.length; i++) {
+    for (var j = 0; j < points[i].help.length; j++) {
+
+      if (points[i].help[j].isValid && points[i].help[j].categories.includes(req.params.categoria)) {
+        pointsResponse.push({
+          _id: points[i]._id,
+          help: points[i].help[j]
+        })
+        break;
+      }
+    }
+  }
+
+  return pointsResponse;
 
 }
 
@@ -94,6 +127,5 @@ async function getProdutosFromCategoria(categoria) {
     })
     .sort({
       produto: 1
-   });
+    });
 }
-

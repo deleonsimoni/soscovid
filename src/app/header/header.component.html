@@ -16,7 +16,7 @@
           <a style="color:white" class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">Olá,
             {{getShortName(user?.fullname)}}</a>
         </li>
-        <li class="nav-item mx-0 mx-lg-1">
+        <li data-toggle="collapse" data-target="#navbarResponsive" class="nav-item mx-0 mx-lg-1">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/mapas">colabore</a>
         </li>
         <!--<li class="nav-item mx-0 mx-lg-1">
@@ -27,12 +27,12 @@
         <li *ngIf="user && user.icAdmin" class="nav-item mx-0 mx-lg-1">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/upload">upload</a>
         </li>
-        <li *ngIf="!user" class="nav-item mx-0 mx-lg-1">
+        <li data-toggle="collapse" data-target="#navbarResponsive" *ngIf="!user" class="nav-item mx-0 mx-lg-1">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/auth/login">acesse</a>
         </li>
-        <li class="nav-item mx-0 mx-lg-1">
+        <li data-toggle="collapse" data-target="#navbarResponsive" class="nav-item mx-0 mx-lg-1">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" [routerLink]="['/']"
-            fragment="portfolio">contato</a>
+            fragment="portfolio">principal</a>
         </li>
         <li *ngIf="user" class="nav-item mx-0 mx-lg-1">
           <a href class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" (click)="logout()">sair</a>

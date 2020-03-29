@@ -68,6 +68,7 @@ const UserSchema = new mongoose.Schema({
     obs: {
       type: String
     },
+    categories: [],
     isExpire: {
       type: Boolean,
       default: false
@@ -108,6 +109,7 @@ const UserSchema = new mongoose.Schema({
   versionKey: false
 });
 
+//db.users.createIndex({'help.location': "2dsphere"});
 UserSchema.index({
   'help.location': "2dsphere"
 });

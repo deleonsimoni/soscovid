@@ -80,8 +80,6 @@ export class MapasComponent implements OnInit {
   ngOnInit() {
     this.token = this.authService.getToken();
     this.user = this.authService.getDecodedAccessToken(this.token);
-
-
   }
 
   carregarPontos() {
@@ -107,6 +105,13 @@ export class MapasComponent implements OnInit {
   selectMarker(help) {
 
     this.selectedHelp = help;
+    this.isUserHelp = false;
+    let helpValid;
+    if (help.help[0]) {
+      helpValid = help.help[0];
+    } else {
+      helpValid = help.help
+    }
 
     if (!this.token || this.token == 'null') {
       const dialogRef = this.dialog.open(ModalCriarContaComponent, {
@@ -116,7 +121,7 @@ export class MapasComponent implements OnInit {
 
       this.necessidades = [];
 
-      if (help.help[0].userHelp.length && help.help[0].userHelp.some(element => element.userId == this.user._id)) {
+      if (helpValid.userHelp.length && helpValid.userHelp.some(element => element.userId == this.user._id)) {
         this.isUserHelp = true;
       }
 
@@ -124,21 +129,17 @@ export class MapasComponent implements OnInit {
         this.userContent = res;
 
         this.modalRef = this.modalService.show(this.modalTemplateRef, Object.assign({}, { class: 'modal-edit' }));
-        this.modalRef.content.onClose.subscribe(result => {
-          this.isUserHelp = false;
-        })
+
       }, err => {
         this.toastr.error('Erro ao recuperar dados do usuario.', 'Erro: ');
       });
 
 
-      help.help.forEach(element => {
-        element.necessidades.forEach(_id => {
-          this.http.get(`${this.baseUrl}/points/getNecessidades/` + _id).subscribe((res: any) => {
-            this.necessidades.push(res);
-          }, err => {
-            this.toastr.error('Erro ao recuperar produtos.', 'Erro: ');
-          });
+      helpValid.necessidades.forEach(idNecessidade => {
+        this.http.get(`${this.baseUrl}/points/getNecessidades/` + idNecessidade).subscribe((res: any) => {
+          this.necessidades.push(res);
+        }, err => {
+          this.toastr.error('Erro ao recuperar produtos.', 'Erro: ');
         });
       });
 
@@ -232,6 +233,29 @@ export class MapasComponent implements OnInit {
     });
   }
 
+  getPointsByPreCategoria(preCategoria) {
+    this.carregando = true;
+    this.preCategoriaSelecionada = preCategoria;
+    this.http.get(`${this.baseUrl}/points/getPointsByPreCategoria/` + preCategoria + '/' + this.lat + '/' + this.lng).subscribe((res: any) => {
+      this.carregando = false;
+      this.points = res;
+      /*res.forEach(element => {
+        if (element.help.length > 0) {
+          this.points.push(element);
+        }
+      });*/
+
+
+      if (this.points.length == 0) {
+        this.toastr.error('Não há mais ninguém precisando deste produto', 'Poxa: ');
+      }
+
+    }, err => {
+      this.carregando = false;
+      this.toastr.error('Servidor momentaneamente inoperante. Tente novamente mais tarde', 'Erro: ');
+    });
+  }
+
   mudarPreCategoria(id) {
     if (this.preCategoriaSelecionada != id) {
       this.carregando = true;
@@ -295,8 +319,9 @@ export class MapasComponent implements OnInit {
 
   callConfirmHelp() {
     this.carregando = true;
+    let id = this.selectedHelp.help[0] ? this.selectedHelp.help[0]._id : this.selectedHelp.help._id;
 
-    this.http.post(`${this.baseUrl}/points/confirmHelp/` + this.selectedHelp.help[0]._id, {}).subscribe((res: any) => {
+    this.http.post(`${this.baseUrl}/points/confirmHelp/` + id, {}).subscribe((res: any) => {
       this.carregando = false;
       this.isUserHelp = true;
 
