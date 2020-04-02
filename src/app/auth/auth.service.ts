@@ -4,6 +4,8 @@ import { Subject } from 'rxjs/Subject';
 import { TokenStorage } from './token.storage';
 import { ToastrService } from 'ngx-toastr';
 import { Injectable, Inject } from '@angular/core';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 
 const TOKEN_KEY = '_ixdcnorg';
@@ -56,12 +58,21 @@ export class AuthService {
 
   register(register): Observable<any> {
     return Observable.create(observer => {
-      this.http.post(`${this.baseUrl}/auth/register`, register).subscribe((data: any) => {
-        observer.next({ user: data.user });
-        this.setUser(data.user, data.token);
-        this.token.saveToken(data.token);
-        observer.complete();
-      })
+      this.http.post(`${this.baseUrl}/auth/register`, register)
+        .pipe(catchError(err => throwError(err)))
+        .subscribe((data: any) => {
+          observer.next({ user: data.user });
+          this.setUser(data.user, data.token);
+          this.token.saveToken(data.token);
+          observer.complete();
+        }, err => {
+          if (err.error && err.error.message && err.error.message.includes('email')) {
+            this.toastr.error('Email já cadastrado na base de dados.', 'Erro: ');
+          } else {
+            this.toastr.error('Ocorreu um erro na criação do usuário, tente novamente mais tarde.', 'Erro: ');
+          }
+        }
+        )
     }, error => {
       this.toastr.error('Ocorreu um erro na criação do usuário, tente novamente mais tarde.', 'Erro: ');
     });

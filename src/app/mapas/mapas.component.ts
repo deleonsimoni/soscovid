@@ -49,7 +49,7 @@ export class MapasComponent implements OnInit {
   user: any;
   lat: any;
   lng: any;
-  zoom = 12;
+  zoom = 16;
   @ViewChild('categoriaSeta', { static: false }) categoriaSeta: ElementRef;
   @ViewChild('modalTemplate', { static: false }) modalTemplateRef: TemplateRef<any>;
   @ViewChild('callHelp', { static: false }) callHelpModal: TemplateRef<any>;
@@ -92,6 +92,8 @@ export class MapasComponent implements OnInit {
       res.forEach(element => {
         if (element.help.length > 0) {
           this.points.push(element);
+        } else {
+          this.toastr.info('Não há ninguém precisando de algo nas proximidades', 'Atenção');
         }
       });
 
@@ -153,6 +155,14 @@ export class MapasComponent implements OnInit {
         data: {},
       });
       return
+    }
+
+    for (let index = 0; index < this.necessidades.length; index++) {
+      if (!this.necessidades[index].categoria || !this.necessidades[index].produto) {
+        this.toastr.warning('Preencha corretamente os campos de suprimentos', 'Atenção: ');
+
+        return;
+      }
     }
 
 
@@ -235,10 +245,9 @@ export class MapasComponent implements OnInit {
 
   getPointsByPreCategoria(preCategoria) {
     this.carregando = true;
-    this.preCategoriaSelecionada = preCategoria;
     this.http.get(`${this.baseUrl}/points/getPointsByPreCategoria/` + preCategoria + '/' + this.lat + '/' + this.lng).subscribe((res: any) => {
       this.carregando = false;
-      this.points = res;
+
       /*res.forEach(element => {
         if (element.help.length > 0) {
           this.points.push(element);
@@ -246,8 +255,13 @@ export class MapasComponent implements OnInit {
       });*/
 
 
-      if (this.points.length == 0) {
-        this.toastr.error('Não há mais ninguém precisando deste produto', 'Poxa: ');
+      if (res.length == 0) {
+        this.toastr.error('Não há mais ninguém próximo precisando deste tipo de ajuda', 'Poxa: ');
+      } else {
+        this.points = res;
+        this.preCategoriaSelecionada = preCategoria;
+        this.categoriaSeta.nativeElement.className = 'fa fa-chevron-down pull-right';
+        this.isCategoriaAberta = false;
       }
 
     }, err => {

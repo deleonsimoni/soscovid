@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
 
   ) { }
 
-  versao = "0.0.8b"
+  versao = "1.0.15"
   atualizado = true;
   ngOnInit() {
     this.user = this.authService.getDecodedAccessToken(this.authService.getToken());

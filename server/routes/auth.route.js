@@ -31,7 +31,7 @@ router.get('/chkVsk/:version', asyncHandler(chkVsk));
 
 
 async function chkVsk(req, res) {
-  if (req.params.version == "0.0.8b") {
+  if (req.params.version == "1.0.15") {
     res.json({
       atualizado: 1
     });

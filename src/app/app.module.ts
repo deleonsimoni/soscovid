@@ -65,7 +65,10 @@ import { ModalWaitGpsComponent } from './modal/modal-wait-gps/modal-wait-gps.com
     NgxMaskModule.forRoot(),
     EmbedVideo.forRoot(),
     NgxMaskModule.forRoot(),
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      preventDuplicates: true,
+      progressBar: true
+    }),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDH7oOZdBbMgyLURojHNE9tcggTpnJTa3Q'
     }),
