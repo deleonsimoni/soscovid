@@ -8,6 +8,7 @@ import { AuthService } from './auth/auth.service';
 import * as schema from './schema/equipment.json';
 
 declare let Media: any;
+declare let navigator: any;
 
 @Component({
   selector: 'app-root',
@@ -46,6 +47,7 @@ export class AppComponent implements OnInit {
 
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
+      navigator.splashscreen.hide();
       document.addEventListener("backbutton", function (e) {
         e.preventDefault();
       }, false);
