@@ -90,11 +90,12 @@ export class MapasComponent implements OnInit {
       this.carregando = false;
       this.points = [];
       res.forEach(element => {
-        if (element.help.length > 0) {
+        if (!element || !element.help || !Array.isArray(element.help) || element.help.length == 0)
+          this.toastr.info('Não há ninguém precisando de ajuda nas proximidades', 'Atenção');
+        else {
           this.points.push(element);
-        } else {
-          this.toastr.info('Não há ninguém precisando de algo nas proximidades', 'Atenção');
         }
+
       });
 
     }, err => {

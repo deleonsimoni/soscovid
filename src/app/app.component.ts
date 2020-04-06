@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { MatIconRegistry } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
-
-
+import { Howl, Howler } from 'howler';
 import { AuthService } from './auth/auth.service';
 import * as schema from './schema/equipment.json';
+
+declare let Media: any;
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
   private userSubscription: Subscription;
   public user: any;
   public imageSplash;
-
+  public sound: any;
 
   constructor(
     private authService: AuthService,
@@ -50,13 +51,15 @@ export class AppComponent implements OnInit {
       }, false);
     }
 
-    setTimeout(() => {    //<<<---    using ()=> syntax
+    setTimeout(() => {
       const splashScreen: HTMLElement = document.getElementById('custom-overlay');
       const menu: HTMLElement = document.getElementById('menu');
 
       if (splashScreen) {
         menu.removeAttribute("style");
         splashScreen.remove();
+        // this.sound.stop();
+
       }
     }, 5500);
 
@@ -64,6 +67,12 @@ export class AppComponent implements OnInit {
     this.userSubscription = this.authService.$userSource.subscribe((user) => {
       this.user = user;
     });
+  }
+
+  playAudio() {
+
+    var media = new Media('../assets/sounds/heartbeat.wav', alert('sucesso'), alert('erro'));
+    media.play();
   }
 
 
