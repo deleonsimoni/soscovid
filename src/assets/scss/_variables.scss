@@ -14,7 +14,7 @@ $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black: #000 !default;
 
-$blue: #007bff !default;
+$blue: #fff !default;
 $indigo: #6610f2 !default;
 $purple: #6f42c1 !default;
 $pink: #e83e8c !default;
@@ -40,15 +40,39 @@ $dark: $gray-800 !default;
 
 // Set custom colors
 $teal: #1abc9c !default;
-$dark-blue: #2c3e50 !default;
+$dark-blue: #fff !default;
 
 // Override Bootstrap primary and secondary colors
 $primary: $teal !default;
 $secondary: $dark-blue !default;
 
 // Override Bootstrap font variables
-$font-family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
-$headings-font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
+$font-family-sans-serif: "Lato",
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+Roboto,
+"Helvetica Neue",
+Arial,
+"Noto Sans",
+sans-serif,
+"Apple Color Emoji",
+"Segoe UI Emoji",
+"Segoe UI Symbol",
+'Noto Color Emoji' !default;
+$headings-font-family: "Montserrat",
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+Roboto,
+"Helvetica Neue",
+Arial,
+"Noto Sans",
+sans-serif,
+"Apple Color Emoji",
+"Segoe UI Emoji",
+"Segoe UI Symbol",
+'Noto Color Emoji' !default;
 $headings-font-weight: 700 !default;
 
 // Override Bootstrap border variables
