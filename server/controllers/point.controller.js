@@ -36,7 +36,7 @@ async function getPoints(req) {
   let points = await User.find({
     'help.location': {
       $near: {
-        $maxDistance: 5000,
+        $maxDistance: 10000,
         $geometry: {
           type: "Point",
           coordinates: [req.params.lng, req.params.lat]

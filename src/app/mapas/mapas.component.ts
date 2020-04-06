@@ -89,14 +89,15 @@ export class MapasComponent implements OnInit {
     this.http.get(`${this.baseUrl}/points/getPointsNear/` + this.lat + '/' + this.lng).subscribe((res: any) => {
       this.carregando = false;
       this.points = [];
-      res.forEach(element => {
-        if (!element || !element.help || !Array.isArray(element.help) || element.help.length == 0)
-          this.toastr.info('Não há ninguém precisando de ajuda nas proximidades', 'Atenção');
-        else {
-          this.points.push(element);
-        }
 
-      });
+      if (res.length > 0) {
+        res.forEach(element => {
+          this.points.push(element);
+        });
+      } else {
+        this.toastr.info('Não há ninguém precisando de ajuda nas proximidades', 'Atenção');
+      }
+
 
     }, err => {
       this.carregando = false;
@@ -339,7 +340,7 @@ export class MapasComponent implements OnInit {
     this.http.post(`${this.baseUrl}/points/confirmHelp/` + id, {}).subscribe((res: any) => {
       this.carregando = false;
       this.isUserHelp = true;
-
+      this.selectedHelp.help[0] ? this.selectedHelp.help[0].userHelp.push({ userId: this.user._id }) : this.selectedHelp.help.userHelp.push({ userId: this.user._id });
     }, err => {
       this.carregando = false;
       this.toastr.error('Erro ao confirmar ajuda, por favor tente mais tarde', 'Erro: ');
