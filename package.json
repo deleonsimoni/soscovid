@@ -58,7 +58,7 @@
     "howler": "^2.1.3",
     "http-errors": "^1.6.3",
     "joi": "^13.3.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jsonwebtoken": "^8.2.1",
     "jwt-decode": "^2.2.0",
     "method-override": "^2.3.10",
